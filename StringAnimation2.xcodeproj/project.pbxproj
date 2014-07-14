@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E37EFA6196DCF0400DD9067 /* ofxSimpleTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E37EFA2196DCF0400DD9067 /* ofxSimpleTimer.cpp */; };
+		0EC024141971E0D9008FBA0C /* ofxTextBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0240F1971E0D9008FBA0C /* ofxTextBlock.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -62,6 +63,10 @@
 /* Begin PBXFileReference section */
 		0E37EFA2196DCF0400DD9067 /* ofxSimpleTimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSimpleTimer.cpp; sourceTree = "<group>"; };
 		0E37EFA3196DCF0400DD9067 /* ofxSimpleTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleTimer.h; sourceTree = "<group>"; };
+		0EC0240D1971E0D9008FBA0C /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
+		0EC0240F1971E0D9008FBA0C /* ofxTextBlock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTextBlock.cpp; sourceTree = "<group>"; };
+		0EC024101971E0D9008FBA0C /* ofxTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTextBlock.h; sourceTree = "<group>"; };
+		0EC024111971E0D9008FBA0C /* ofxTextSuite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTextSuite.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -132,9 +137,30 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		0EC024081971E0D9008FBA0C /* ofxTextSuite */ = {
+			isa = PBXGroup;
+			children = (
+				0EC0240D1971E0D9008FBA0C /* install.xml */,
+				0EC0240E1971E0D9008FBA0C /* src */,
+			);
+			name = ofxTextSuite;
+			path = ../../../addons/ofxTextSuite;
+			sourceTree = "<group>";
+		};
+		0EC0240E1971E0D9008FBA0C /* src */ = {
+			isa = PBXGroup;
+			children = (
+				0EC0240F1971E0D9008FBA0C /* ofxTextBlock.cpp */,
+				0EC024101971E0D9008FBA0C /* ofxTextBlock.h */,
+				0EC024111971E0D9008FBA0C /* ofxTextSuite.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				0EC024081971E0D9008FBA0C /* ofxTextSuite */,
 				0E37EF92196DCF0400DD9067 /* ofxSimpleTimer */,
 			);
 			name = addons;
@@ -307,6 +333,7 @@
 			files = (
 				0E37EFA6196DCF0400DD9067 /* ofxSimpleTimer.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
+				0EC024141971E0D9008FBA0C /* ofxTextBlock.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

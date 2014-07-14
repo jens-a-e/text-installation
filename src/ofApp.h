@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxSimpleTimer.h"
+#include "ofxTextSuite.h"
 
 class ofApp : public ofBaseApp{
 
@@ -20,23 +21,32 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-        ofTrueTypeFont futura60;
-        ofTrueTypeFont futura24;
+        ofTrueTypeFont futura68, futura34, futura34b;
     
-        string satz1;
-        string satz2;
+        string satz1a, satz1b, satz1c;
+        string satz2a, satz2b;
     
-        string satz1full;
-        string satz2full;
+        string satz1afull, satz1bfull, satz1cfull;
+        string satz2afull, satz2bfull;;
     
-    float text_position;
+    
+    float text_position, timer;
     int last_text_pos;
-    int cite_index, author_index;
+    int cite_index, author_index, author2_index;
+    int alpha;
     
     
     ofxSimpleTimer zitateTimer;
     ofxSimpleTimer buchstabenTicker;
+    ofxSimpleTimer clearTimer;
+    
+    TextBlockAlignment alignment;
+    ofxTextBlock autor1, autor2;
 		
     
     void zitateTimerStartHandler(int &args);
+    void zitateTimerCompleteHandler(int &args);
+    
+    void clearTimerStartHandler(int &args);
+    void clearTimerCompleteHandler(int &args);
 };
