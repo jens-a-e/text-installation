@@ -1,3 +1,5 @@
 
 bin/*.app
-StringAnimation2.xcodeproj/project.xcworkspace/xcshareddata/StringAnimation2.xccheckout
+
+StringAnimation2.xcodeproj/project.xcworkspace/xcuserdata/*
+StringAnimation2.xcodeproj/project.xcworkspace/xcshareddata/*
