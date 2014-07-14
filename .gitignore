@@ -1,5 +1,9 @@
 
 bin/*.app
 
-StringAnimation2.xcodeproj/project.xcworkspace/xcuserdata/*
-StringAnimation2.xcodeproj/project.xcworkspace/xcshareddata/*
+*.xcodeproj/project.xcworkspace/xcuserdata/*
+*.xcodeproj/project.xcworkspace/xcuserdata/**/*
+*.xcodeproj/project.xcworkspace/xcshareddata/*
+
+
+*.xcodeproj/**/*.xcuserstate
