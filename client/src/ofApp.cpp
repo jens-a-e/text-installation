@@ -4,7 +4,6 @@
 void ofApp::setup(){
     
   ofSetVerticalSync(true);
-  ofSetWindowShape(1024, 600);
   ofBackground(51, 99, 59);
 
   ofTrueTypeFont::setGlobalDpi(72);
@@ -49,9 +48,19 @@ void ofApp::setup(){
   ofAddListener( zitateTimer.TIMER_STARTED  , this, &ofApp::zitateTimerStartHandler ) ;
   ofAddListener( zitateTimer.TIMER_COMPLETE , this, &ofApp::zitateTimerCompleteHandler ) ;
 
-  zitateTimer.setup(14000);
-  clearTimer.setup(1000);
-  zitateTimer.start(true);
+  zitateTimer.setup(8000);
+  
+  ofAddListener( rewindTimer.TIMER_STARTED  , this, &ofApp::rewindTimerStartHandler ) ;
+  ofAddListener( rewindTimer.TIMER_COMPLETE , this, &ofApp::rewindTimerCompleteHandler ) ;
+  
+  rewindTimer.setup(900);
+  
+  ofAddListener( clearTimer.TIMER_STARTED  , this, &ofApp::clearTimerStartHandler ) ;
+  ofAddListener( clearTimer.TIMER_COMPLETE , this, &ofApp::clearTimerCompleteHandler ) ;
+
+  clearTimer.setup(1500);
+  
+  zitateTimer.start(false);
 
   // -- Helper Vars
   alpha = 0;
@@ -60,85 +69,77 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    zitateTimer.update();
-    
-
-    // satz bilden
-    text_position = ofClamp(text_position, 0, satz1afull.length() + satz1bfull.length() + satz1cfull.length());
-    
-    
-    if ( last_text_pos != (int)text_position) {
-        cite_index = CLAMP(text_position, 0, satz1afull.length());
-        
-        author_index = CLAMP(text_position - satz1afull.length(), 0, satz1bfull.length());
-        
-        author2_index = CLAMP(text_position - satz1afull.length() + satz1bfull.length(), 0, satz1cfull.length());
-        
-        
-        satz1a = satz1afull.substr(0, cite_index);
-        satz1b = satz1bfull.substr(0, author_index);
-        satz1c = satz1cfull.substr(0, author2_index);
-    }
-    
-    last_text_pos = text_position;
+  zitateTimer.update();
+  rewindTimer.update();
+  clearTimer.update();
   
-  if (text_position < 0) text_position = 0.5;
+  int maxChars = satz1afull.length();
+  float amount = 0;
+  if (zitateTimer.bIsRunning) {
+    float currentTimer = zitateTimer.getNormalizedProgress();
+    amount = ofLerp(0, maxChars, ofMap(currentTimer, 0, 0.6, 0, 1));
+  } else if (rewindTimer.bIsRunning) {
+    float currentTimer = rewindTimer.getNormalizedProgress();
+    amount = ofLerp(0, maxChars, ofMap(currentTimer, 0, 1, 1, 0));
+  }
   
-    timer += ofGetLastFrameTime() * 15;
-    if (timer < 114) {
-      text_position += ofGetLastFrameTime() * 15;
-    }
-    else if (timer > 160 && text_position > 0) {
-      text_position -= ofGetLastFrameTime() * 60;
-    } else if (text_position < 0) {
-      zitateTimer.reset();
-      zitateTimer.start(true);
-    }
+  satz1a = satz1afull.substr(0,(int)ofClamp(amount, 0, maxChars));
   
-  ofLog(OF_LOG_NOTICE, "textposition %f\t%f\n", text_position,ofGetLastFrameTime());
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-  ofBackground(60, 60, 60);
+  ofBackground(51, 99, 59);
   ofSetColor(225);
   
-  zitateTimer.draw( 15 , 15 ) ;
+  zitateTimer.draw( 15 , 10 );
+  clearTimer.draw( 15 , 25 );
+  rewindTimer.draw(15, 40 );
 
-  mainFace.drawString(satz1a, 50, 120, 1300, 500, align);
-
-  if (text_position > 95) {
-    citeNameFace.drawString(satz1bfull,955, 450, 1300, 50, align);
-    citeMetaFace.drawString(satz1cfull,950, 500, 1300, 50, align);
+  if (satz1a.length() > 0) {
+    mainFace.drawString(satz1a, 50, 100, ofGetWidth()-100, 500, UL2_TEXT_ALIGN_INVALID);
   }
   
-  utilFace.drawString(ofToString((int)text_position) + " - " + ofToString(cite_index) + " - " + ofToString(alpha), 30, 40);
+  if (zitateTimer.getNormalizedProgress() >= 0.75 && zitateTimer.getNormalizedProgress() <= 0.95) {
+    citeNameFace.drawString(satz1bfull,50, 550, ofGetWidth()-100, 50, UL2_TEXT_ALIGN_V_TOP|UL2_TEXT_ALIGN_RIGHT);
+    citeMetaFace.drawString(satz1cfull,50, 600, ofGetWidth()-100, 50, UL2_TEXT_ALIGN_V_TOP|UL2_TEXT_ALIGN_RIGHT);
+  }
   
 }
 
 void ofApp::zitateTimerStartHandler(int &args) {
-  ofLog(OF_LOG_NOTICE,"Zitate Timer Complete!");
-    text_position = 0;
-    timer, alpha = 0;
-    last_text_pos = cite_index = author_index = author2_index = 0;
-    zitateTimer.start(true);
+  ofLog(OF_LOG_NOTICE,"Zitate Timer Started!");
 }
 
 void ofApp::zitateTimerCompleteHandler(int &args) {
-  text_position = 0;
-  timer, alpha = 0;
-  last_text_pos = cite_index = author_index = author2_index = 0;
   ofLog(OF_LOG_NOTICE,"Zitate Timer Complete!");
+  rewindTimer.start(false);
+}
+
+void ofApp::clearTimerStartHandler(int &args) {
+  ofLog(OF_LOG_NOTICE,"Clear Timer Started!");
+}
+
+void ofApp::clearTimerCompleteHandler(int &args) {
+  ofLog(OF_LOG_NOTICE,"Clear Timer Complete!");
+  zitateTimer.start(false);
+}
+
+void ofApp::rewindTimerStartHandler(int &args) {
+  ofLog(OF_LOG_NOTICE,"Rewind Timer Started!");
+}
+
+void ofApp::rewindTimerCompleteHandler(int &args) {
+  ofLog(OF_LOG_NOTICE,"Rewind Timer Complete!");
+  clearTimer.start(false);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+  return;
   string strDirection = "";
   string strAlign = "";
   switch(key){
-    case ' ':
-      bitmapRendering=!bitmapRendering;
-      break;
     case 'w':
     case 'W':
       mainFace.setWordWrap(!mainFace.getWordWrap());

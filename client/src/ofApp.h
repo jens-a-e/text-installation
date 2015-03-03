@@ -43,17 +43,18 @@ class ofApp : public ofBaseApp{
     int alpha;
     
     
-    ofxSimpleTimer zitateTimer;
-    ofxSimpleTimer buchstabenTicker;
     ofxSimpleTimer clearTimer;
-    
+    ofxSimpleTimer zitateTimer, rewindTimer;
+  
     TextBlockAlignment alignment;
     ofxTextBlock autor1, autor2;
-		
-    
+  
     void zitateTimerStartHandler(int &args);
     void zitateTimerCompleteHandler(int &args);
-    
+  
+  void rewindTimerStartHandler(int &args);
+  void rewindTimerCompleteHandler(int &args);
+  
     void clearTimerStartHandler(int &args);
     void clearTimerCompleteHandler(int &args);
 };
