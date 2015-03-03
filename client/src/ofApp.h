@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxCsv.h"
 #include "ofxSimpleTimer.h"
 #include "ofxTextSuite.h"
 
