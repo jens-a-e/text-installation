@@ -11,6 +11,11 @@
 		B4EC41D21AA5C001002A230B /* ofxTextBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4EC41311AA5BFE0002A230B /* ofxTextBlock.cpp */; };
 		B4EC41D31AA5C001002A230B /* ofxTrueTypeFontUL2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4EC41651AA5BFE0002A230B /* ofxTrueTypeFontUL2.cpp */; };
 		B4EC41EA1AA5C51F002A230B /* ofxSimpleTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4EC41E51AA5C51A002A230B /* ofxSimpleTimer.cpp */; };
+		B4EC41F41AA5D8A8002A230B /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4EC41ED1AA5D8A8002A230B /* tinyxml.cpp */; };
+		B4EC41F51AA5D8A8002A230B /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4EC41EF1AA5D8A8002A230B /* tinyxmlerror.cpp */; };
+		B4EC41F61AA5D8A8002A230B /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4EC41F01AA5D8A8002A230B /* tinyxmlparser.cpp */; };
+		B4EC41F71AA5D8A8002A230B /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4EC41F21AA5D8A8002A230B /* ofxXmlSettings.cpp */; };
+		B4EC41F91AA5ED8B002A230B /* libharfbuzz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4EC415E1AA5BFE0002A230B /* libharfbuzz.a */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -242,6 +247,12 @@
 		B4EC41E31AA5C51A002A230B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B4EC41E51AA5C51A002A230B /* ofxSimpleTimer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSimpleTimer.cpp; sourceTree = "<group>"; };
 		B4EC41E61AA5C51A002A230B /* ofxSimpleTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxSimpleTimer.h; sourceTree = "<group>"; };
+		B4EC41ED1AA5D8A8002A230B /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
+		B4EC41EE1AA5D8A8002A230B /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
+		B4EC41EF1AA5D8A8002A230B /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
+		B4EC41F01AA5D8A8002A230B /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
+		B4EC41F21AA5D8A8002A230B /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
+		B4EC41F31AA5D8A8002A230B /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -288,6 +299,7 @@
 				E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */,
 				E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */,
 				E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */,
+				B4EC41F91AA5ED8B002A230B /* libharfbuzz.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -755,6 +767,44 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		B4EC41EB1AA5D8A8002A230B /* ofxXmlSettings */ = {
+			isa = PBXGroup;
+			children = (
+				B4EC41EC1AA5D8A8002A230B /* libs */,
+				B4EC41F11AA5D8A8002A230B /* src */,
+			);
+			name = ofxXmlSettings;
+			path = ../../../addons/ofxXmlSettings;
+			sourceTree = "<group>";
+		};
+		B4EC41EC1AA5D8A8002A230B /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				B4EC41ED1AA5D8A8002A230B /* tinyxml.cpp */,
+				B4EC41EE1AA5D8A8002A230B /* tinyxml.h */,
+				B4EC41EF1AA5D8A8002A230B /* tinyxmlerror.cpp */,
+				B4EC41F01AA5D8A8002A230B /* tinyxmlparser.cpp */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		B4EC41F11AA5D8A8002A230B /* src */ = {
+			isa = PBXGroup;
+			children = (
+				B4EC41F21AA5D8A8002A230B /* ofxXmlSettings.cpp */,
+				B4EC41F31AA5D8A8002A230B /* ofxXmlSettings.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		B4EC41F81AA5D8C1002A230B /* of_addons */ = {
+			isa = PBXGroup;
+			children = (
+				B4EC41EB1AA5D8A8002A230B /* ofxXmlSettings */,
+			);
+			name = of_addons;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
@@ -820,6 +870,7 @@
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
+				B4EC41F81AA5D8C1002A230B /* of_addons */,
 				BB4B014C10F69532006C3DED /* addons */,
 				E45BE5980E8CC70C009D7055 /* frameworks */,
 				E4B69B5B0A3A1756003C02F2 /* CiteClientDebug.app */,
@@ -966,11 +1017,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4EC41F51AA5D8A8002A230B /* tinyxmlerror.cpp in Sources */,
+				B4EC41F61AA5D8A8002A230B /* tinyxmlparser.cpp in Sources */,
 				B4EC41D11AA5C001002A230B /* ofxCsv.cpp in Sources */,
 				B4EC41EA1AA5C51F002A230B /* ofxSimpleTimer.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				B4EC41D21AA5C001002A230B /* ofxTextBlock.cpp in Sources */,
+				B4EC41F41AA5D8A8002A230B /* tinyxml.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
+				B4EC41F71AA5D8A8002A230B /* ofxXmlSettings.cpp in Sources */,
 				B4EC41D31AA5C001002A230B /* ofxTrueTypeFontUL2.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1127,6 +1182,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_52)",
+					"$(PROJECT_DIR)/addons/ofxTrueTypeFontUL2/libs/harfbuzz/lib/osx",
 				);
 				PRODUCT_NAME = CiteClientDebug;
 				WRAPPER_EXTENSION = app;
@@ -1212,6 +1268,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_49)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
+					"$(PROJECT_DIR)/addons/ofxTrueTypeFontUL2/libs/harfbuzz/lib/osx",
 				);
 				PRODUCT_NAME = CiteClient;
 				WRAPPER_EXTENSION = app;
