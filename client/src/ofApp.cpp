@@ -61,6 +61,8 @@ void ofApp::setup(){
   clearTimer.setup(1500);
   
   zitateTimer.start(false);
+  
+  align = UL2_TEXT_ALIGN_INVALID;
 
   // -- Helper Vars
   alpha = 0;
@@ -97,7 +99,7 @@ void ofApp::draw(){
   rewindTimer.draw(15, 40 );
 
   if (satz1a.length() > 0) {
-    mainFace.drawString(satz1a, 50, 100, ofGetWidth()-100, 500, UL2_TEXT_ALIGN_INVALID);
+    mainFace.drawString(satz1a, 50, 100, ofGetWidth()-100, 500, align);
   }
   
   if (zitateTimer.getNormalizedProgress() >= 0.75 && zitateTimer.getNormalizedProgress() <= 0.95) {
@@ -136,7 +138,6 @@ void ofApp::rewindTimerCompleteHandler(int &args) {
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-  return;
   string strDirection = "";
   string strAlign = "";
   switch(key){
