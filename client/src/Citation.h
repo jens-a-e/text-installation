@@ -24,7 +24,7 @@ public:
   Citation(int id, string body, string author, string affiliation, string year, string reason);
   ~Citation();
   
-  static const Citation fromCSVRow(ofxCsv csv, int row);
+  static Citation * fromCSVRow(ofxCsv csv, int row);
 
   const string toString();
 };

@@ -27,9 +27,11 @@ public:
   void dragEvent(ofDragInfo dragInfo);
   void gotMessage(ofMessage msg);
 
+  bool bDebug = false;
+  
   // We want to use Unicode features to be safe and
   // get better text layout with harfbuzz
-  ofxTrueTypeFontUL2 mainFace, citeNameFace, citeMetaFace, utilFace;
+  ofxTrueTypeFontUL2 mainFace, citeNameFace, citeMetaFace;
 
   string cite_partial;
 
@@ -38,7 +40,6 @@ public:
   bool bitmapRendering = true;
   int align;
 
-#define NUM_TIMERS 6
   ofxSimpleTimer idle, type, waitForMeta, showMeta, waitRewind, rewind;
   vector<ofxSimpleTimer*> timers;
   

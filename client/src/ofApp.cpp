@@ -96,15 +96,17 @@ void ofApp::draw(){
   ofBackground(51, 99, 59);
   ofSetColor(225);
   
-  int y = 10;
-  for(std::vector<ofxSimpleTimer*>::iterator timer = timers.begin(); timer != timers.end(); ++timer) {
-    (*timer)->draw( 15 , y );
-    y += 15;
+  if (bDebug) {
+    int y = 10;
+    for(std::vector<ofxSimpleTimer*>::iterator timer = timers.begin(); timer != timers.end(); ++timer) {
+      (*timer)->draw( 15 , y );
+      y += 15;
+    }
   }
   
 
   if (currentCitation != NULL) {
-    if (cite_partial.length() > 0) {
+    if (type.bIsRunning || waitForMeta.bIsRunning || showMeta.bIsRunning || waitRewind.bIsRunning || rewind.bIsRunning) {
       mainFace.drawString(cite_partial, 50, 100, ofGetWidth()-100, 500, align);
     }
     
@@ -207,10 +209,10 @@ void ofApp::rewindTimerStartHandler(int &args) {
 
 void ofApp::rewindTimerCompleteHandler(int &args) {
   ofLog(OF_LOG_NOTICE,"Rewind Complete!");
-  if (citeAmount == 0) {
-    idle.start(false);
-  } else {
+  if (citeAmount > 0) {
     rewind.start(false);
+  } else {
+    idle.start(false);
   }
 }
 
@@ -312,6 +314,9 @@ void ofApp::keyPressed(int key){
       mainFace.setTextDirection(UL2_TEXT_DIRECTION_BTT,UL2_TEXT_DIRECTION_RTL);
       strDirection="Bottom to Top (RTL)";
       break;
+      case '.':
+      bDebug = !bDebug;
+      break;
       
   }
   
@@ -371,6 +376,7 @@ void ofApp::buildCitationRun(){
     ofLog(OF_LOG_WARNING, "No data in DB");
     return;
   }
+  
   std:vector<int> ids;
   // substract header row from numRows!
   for (int r=0; r < db.numRows-1; r++) {
@@ -380,14 +386,18 @@ void ofApp::buildCitationRun(){
   int last_id = currentCitation == NULL ? -1 : currentCitation->id;
   
   if (last_id >= 0) {
+    Citation *testCite;
     do {
       ofRandomize(ids);
-    } while(Citation::fromCSVRow(db, ids.at(0)).id != last_id );
+      testCite = Citation::fromCSVRow(db, ids.at(0));
+    } while(testCite->id != last_id );
+    delete testCite;
   }
   
   if (citationIDs != NULL) {
     delete citationIDs;
   }
+  
   citationIDs = new std::stack<int,std::vector<int> >(ids);
 }
 
@@ -402,8 +412,10 @@ void ofApp::nextCitation(){
   if(currentCitation != NULL) {
     delete currentCitation;
   }
-  currentCitation = new Citation(Citation::fromCSVRow(db, next));
+  
+  currentCitation = Citation::fromCSVRow(db, next);
   ofLog() << currentCitation->toString();
+  
   citationIDs->pop();
 }
 

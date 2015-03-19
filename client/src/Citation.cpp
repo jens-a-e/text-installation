@@ -22,7 +22,7 @@ Citation::~Citation(){
   
 }
 
-const Citation Citation::fromCSVRow(wng::ofxCsv csv, int row) {
+Citation* Citation::fromCSVRow(wng::ofxCsv csv, int row) {
   // Nummer,Zitat,Name,Position,Jahr,Anlass
   
   row += 1; // the first row is a table header
@@ -44,7 +44,7 @@ const Citation Citation::fromCSVRow(wng::ofxCsv csv, int row) {
     body = _body.str();
   }
   
-  return Citation(
+  return new Citation(
                   id,
                   body,
                   author,
