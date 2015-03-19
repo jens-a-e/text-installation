@@ -2,13 +2,10 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
-  ofSetLogLevel(OF_LOG_VERBOSE);
+  ofSetLogLevel(OF_LOG_ERROR);
   
   ofSetVerticalSync(true);
   ofBackground(51, 99, 59);
-
-//  ofTrueTypeFont::setGlobalDpi(72);
 
   string bookObliqueFont  = ofToDataPath("FuturaStd-BookOblique.otf");
   string heavyFont        = ofToDataPath("FuturaStd-Heavy.otf");
@@ -23,74 +20,75 @@ void ofApp::setup(){
   mainFace.useProportional(true);
   mainFace.setTextDirection(UL2_TEXT_DIRECTION_LTR);
   mainFace.loadFont(heavyFont, 68);
-
-  utilFace.loadFont(heavyFont, 34);
-  utilFace.setLetterSpacing(1.05);
-  utilFace.setLineHeight(44);
-  utilFace.setGlobalDpi(72);
-  utilFace.setAlignByPixel(true);
-  utilFace.setWordWrap(true);
-  utilFace.setTextDirection(UL2_TEXT_DIRECTION_TTB);
   
-  citeNameFace.loadFont(heavyObliqueFont, 34);
   citeNameFace.setLineHeight(44);
   citeNameFace.setWordWrap(true);
+  citeNameFace.loadFont(heavyObliqueFont, 34);
 
-  citeMetaFace.loadFont(bookObliqueFont, 34);
   citeMetaFace.setLineHeight(44);
   citeMetaFace.setWordWrap(true);
+  citeMetaFace.loadFont(bookObliqueFont, 34);
   
   // Prepare citations
   
   loadDB();  
   
   // -- Setup Timers
-  
-  ofAddListener( zitateTimer.TIMER_STARTED  , this, &ofApp::zitateTimerStartHandler ) ;
-  ofAddListener( zitateTimer.TIMER_COMPLETE , this, &ofApp::zitateTimerCompleteHandler ) ;
+  idle.setup(1500);
+  ofAddListener( idle.TIMER_STARTED  , this, &ofApp::idleTimerStartHandler ) ;
+  ofAddListener( idle.TIMER_COMPLETE , this, &ofApp::idleTimerCompleteHandler ) ;
 
-  zitateTimer.setup(8000);
-  
-  ofAddListener( rewindTimer.TIMER_STARTED  , this, &ofApp::rewindTimerStartHandler ) ;
-  ofAddListener( rewindTimer.TIMER_COMPLETE , this, &ofApp::rewindTimerCompleteHandler ) ;
-  
-  rewindTimer.setup(900);
-  
-  ofAddListener( clearTimer.TIMER_STARTED  , this, &ofApp::clearTimerStartHandler ) ;
-  ofAddListener( clearTimer.TIMER_COMPLETE , this, &ofApp::clearTimerCompleteHandler ) ;
+#ifndef CPM
+#define CPM(x) (60/float(x)*1000)
+#endif
 
-  clearTimer.setup(1500);
+#define FCPM CPM(800)
+#define RCPM CPM(1000)
+
+  ofLog() << "Using " << ofToString(FCPM) << " as forward typing frequency";
+  type.setup(40);
+  ofAddListener( type.TIMER_STARTED  , this, &ofApp::typeTimerStartHandler ) ;
+  ofAddListener( type.TIMER_COMPLETE , this, &ofApp::typeTimerCompleteHandler ) ;
+
+  waitForMeta.setup(1000);
+  ofAddListener( waitForMeta.TIMER_STARTED  , this, &ofApp::waitForMetaTimerStartHandler ) ;
+  ofAddListener( waitForMeta.TIMER_COMPLETE , this, &ofApp::waitForMetaTimerCompleteHandler ) ;
   
-  zitateTimer.start(false);
+  showMeta.setup(3000);
+  ofAddListener( showMeta.TIMER_STARTED  , this, &ofApp::showMetaTimerStartHandler ) ;
+  ofAddListener( showMeta.TIMER_COMPLETE , this, &ofApp::showMetaTimerCompleteHandler ) ;
+  
+  waitRewind.setup(1000);
+  ofAddListener( waitRewind.TIMER_STARTED  , this, &ofApp::waitRewindTimerStartHandler) ;
+  ofAddListener( waitRewind.TIMER_COMPLETE , this, &ofApp::waitRewindTimerCompleteHandler ) ;
+  
+  ofLog() << "Using " << ofToString(RCPM) << " as rewidn typing frequency";
+  rewind.setup(16);
+  ofAddListener( rewind.TIMER_STARTED  , this, &ofApp::rewindTimerStartHandler ) ;
+  ofAddListener( rewind.TIMER_COMPLETE , this, &ofApp::rewindTimerCompleteHandler ) ;
+  
+  timers.push_back(&idle);
+  timers.push_back(&type);
+  timers.push_back(&waitForMeta);
+  timers.push_back(&showMeta);
+  timers.push_back(&waitRewind);
+  timers.push_back(&rewind);
   
   align = UL2_TEXT_ALIGN_INVALID;
-
-  // -- Helper Vars
-  alpha = 0;
+  
+  // kick off the process
+  int start = 42;
+  idleTimerCompleteHandler(start);
   
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-  zitateTimer.update();
-  rewindTimer.update();
-  clearTimer.update();
+  
+  for(std::vector<ofxSimpleTimer*>::iterator timer = timers.begin(); timer != timers.end(); ++timer) {
+    (*timer)->update();
+  }
 
-  if (currentCitation == NULL) {
-    return;
-  }
-  
-  int maxChars = currentCitation->body.length();
-  float amount = 0;
-  if (zitateTimer.bIsRunning) {
-    float currentTimer = zitateTimer.getNormalizedProgress();
-    amount = ofLerp(0, maxChars, ofMap(currentTimer, 0, 0.6, 0, 1));
-  } else if (rewindTimer.bIsRunning) {
-    float currentTimer = rewindTimer.getNormalizedProgress();
-    amount = ofLerp(0, maxChars, ofMap(currentTimer, 0, 1, 1, 0));
-  }
-  
-  satz1a = currentCitation->body.substr(0,(int)ofClamp(amount, 0, maxChars));
 }
 
 //--------------------------------------------------------------
@@ -98,16 +96,19 @@ void ofApp::draw(){
   ofBackground(51, 99, 59);
   ofSetColor(225);
   
-  zitateTimer.draw( 15 , 10 );
-  clearTimer.draw( 15 , 25 );
-  rewindTimer.draw(15, 40 );
+  int y = 10;
+  for(std::vector<ofxSimpleTimer*>::iterator timer = timers.begin(); timer != timers.end(); ++timer) {
+    (*timer)->draw( 15 , y );
+    y += 15;
+  }
+  
 
   if (currentCitation != NULL) {
-    if (satz1a.length() > 0) {
-      mainFace.drawString(satz1a, 50, 100, ofGetWidth()-100, 500, align);
+    if (cite_partial.length() > 0) {
+      mainFace.drawString(cite_partial, 50, 100, ofGetWidth()-100, 500, align);
     }
     
-    if (zitateTimer.getNormalizedProgress() >= 0.75 && zitateTimer.getNormalizedProgress() <= 0.95) {
+    if (showMeta.bIsRunning) {
       
       citeNameFace.drawString(currentCitation->author ,50, ofGetHeight() - 4*34 - 50, ofGetWidth()-100, 4*34, UL2_TEXT_ALIGN_V_TOP|UL2_TEXT_ALIGN_RIGHT);
       
@@ -133,33 +134,86 @@ void ofApp::draw(){
   
 }
 
-void ofApp::zitateTimerStartHandler(int &args) {
-  ofLog(OF_LOG_NOTICE,"Zitate Timer Started!");
+void ofApp::idleTimerStartHandler(int &args) {
+  ofLog(OF_LOG_NOTICE,"Idle Timer Started!");
+}
+
+static int citeAmount = 0;
+
+void ofApp::idleTimerCompleteHandler(int &args) {
+  ofLog(OF_LOG_NOTICE,"Idle Timer Complete!");
+  cite_partial = "";
   nextCitation();
+  citeAmount = 0;
+  type.start(false);
 }
 
-void ofApp::zitateTimerCompleteHandler(int &args) {
-  ofLog(OF_LOG_NOTICE,"Zitate Timer Complete!");
-  rewindTimer.start(false);
+void ofApp::typeTimerStartHandler(int &args) {
+  ofLog(OF_LOG_NOTICE,"Type Timer Started!");
+  
+  if (currentCitation == NULL) {
+    ofLog() << "No citation found, trying again later...";
+    type.stop();
+    idle.start(false); // try again later...
+  }
+  
+  citeAmount++;
+  
+  cite_partial = currentCitation->body.substr(0,citeAmount);
 }
 
-void ofApp::clearTimerStartHandler(int &args) {
-  ofLog(OF_LOG_NOTICE,"Clear Timer Started!");
+void ofApp::typeTimerCompleteHandler(int &args) {
+  ofLog(OF_LOG_NOTICE,"Type Timer Complete!");
+  if (citeAmount >= currentCitation->body.length()) {
+    // Citation is fully displayed
+    waitForMeta.start(false);
+  } else {
+    type.start(false); // otherwise type next char!
+  }
 }
 
-void ofApp::clearTimerCompleteHandler(int &args) {
-  ofLog(OF_LOG_NOTICE,"Clear Timer Complete!");
-  zitateTimer.start(false);
+void ofApp::waitForMetaTimerStartHandler(int &args) {
+  ofLog(OF_LOG_NOTICE,"WaitForMeta Timer Started!");
+}
+
+void ofApp::waitForMetaTimerCompleteHandler(int &args) {
+  ofLog(OF_LOG_NOTICE,"WaitForMeta Complete!");
+  showMeta.start(false);
+}
+
+void ofApp::showMetaTimerStartHandler(int &args) {
+  ofLog(OF_LOG_NOTICE,"WaitForMeta Timer Started!");
+}
+
+void ofApp::showMetaTimerCompleteHandler(int &args) {
+  ofLog(OF_LOG_NOTICE,"ShowMeta Complete!");
+  waitRewind.start(false);
+}
+
+void ofApp::waitRewindTimerStartHandler(int &args) {
+  ofLog(OF_LOG_NOTICE,"ShowMeta Timer Started!");
+}
+
+void ofApp::waitRewindTimerCompleteHandler(int &args) {
+  ofLog(OF_LOG_NOTICE,"WaitRewind Complete!");
+  rewind.start(false);
 }
 
 void ofApp::rewindTimerStartHandler(int &args) {
   ofLog(OF_LOG_NOTICE,"Rewind Timer Started!");
+  citeAmount--;
+  cite_partial = currentCitation->body.substr(0,citeAmount);
 }
 
 void ofApp::rewindTimerCompleteHandler(int &args) {
-  ofLog(OF_LOG_NOTICE,"Rewind Timer Complete!");
-  clearTimer.start(false);
+  ofLog(OF_LOG_NOTICE,"Rewind Complete!");
+  if (citeAmount == 0) {
+    idle.start(false);
+  } else {
+    rewind.start(false);
+  }
 }
+
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
@@ -349,6 +403,7 @@ void ofApp::nextCitation(){
     delete currentCitation;
   }
   currentCitation = new Citation(Citation::fromCSVRow(db, next));
+  ofLog() << currentCitation->toString();
   citationIDs->pop();
 }
 
