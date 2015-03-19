@@ -2,11 +2,13 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    
+
+  ofSetLogLevel(OF_LOG_VERBOSE);
+  
   ofSetVerticalSync(true);
   ofBackground(51, 99, 59);
 
-  ofTrueTypeFont::setGlobalDpi(72);
+//  ofTrueTypeFont::setGlobalDpi(72);
 
   string bookObliqueFont  = ofToDataPath("FuturaStd-BookOblique.otf");
   string heavyFont        = ofToDataPath("FuturaStd-Heavy.otf");
@@ -41,11 +43,6 @@ void ofApp::setup(){
   // Prepare citations
   
   loadDB();  
-
-  satz1afull = L"ICH DENKE, ES GIBT\nWELTWEIT EINEN MARKT\nFUER VIELLEICHT FUENF\nCOMPUTER.";
-  satz1bfull = L"Thomas J. Watson";
-  satz1cfull = L"Vorsitzender von IBM, 1943";
-  
   
   // -- Setup Timers
   
@@ -293,7 +290,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 //--------------------------------------------------------------
 void ofApp::loadDB(){
-  db.loadFile(ofToDataPath("zitate.csv"));
+  db.loadFile(ofToDataPath("zitate-small.csv"));
   buildCitationRun();
 }
 
@@ -304,7 +301,8 @@ void ofApp::buildCitationRun(){
     return;
   }
   std:vector<int> ids;
-  for (int r=0; r < db.numRows; r++) {
+  // substract header row from numRows!
+  for (int r=0; r < db.numRows-1; r++) {
     ids.push_back(r);
   }
   ofRandomize(ids);

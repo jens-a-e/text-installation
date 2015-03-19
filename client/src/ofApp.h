@@ -33,16 +33,14 @@ class ofApp : public ofBaseApp{
   // get better text layout with harfbuzz
     ofxTrueTypeFontUL2 mainFace, citeNameFace, citeMetaFace, utilFace;
 
-    wstring satz1a, satz1b, satz1c;
-    wstring satz2a, satz2b;
+    string satz1a, satz1b, satz1c;
 
-    wstring satz1afull, satz1bfull, satz1cfull;
-    wstring satz2afull, satz2bfull;
+    string satz1afull, satz1bfull, satz1cfull;
   
-  Citation *currentCitation;
-  
-  bool bitmapRendering = true;
-  int align;
+    Citation *currentCitation;
+    
+    bool bitmapRendering = true;
+    int align;
     
     float text_position, timer;
     int last_text_pos;
