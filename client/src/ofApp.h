@@ -6,6 +6,11 @@
 #include "ofxTextSuite.h"
 #include "ofxTrueTypeFontUL2.h"
 #include "ofxXmlSettings.h"
+#include "Citation.h"
+
+// for ofxCsv:
+using namespace wng;
+using namespace std;
 
 class ofApp : public ofBaseApp{
 
@@ -34,6 +39,8 @@ class ofApp : public ofBaseApp{
     wstring satz1afull, satz1bfull, satz1cfull;
     wstring satz2afull, satz2bfull;
   
+  Citation *currentCitation;
+  
   bool bitmapRendering = true;
   int align;
     
@@ -41,8 +48,8 @@ class ofApp : public ofBaseApp{
     int last_text_pos;
     int cite_index, author_index, author2_index;
     int alpha;
-    
-    
+  
+  
     ofxSimpleTimer clearTimer;
     ofxSimpleTimer zitateTimer, rewindTimer;
   
@@ -57,4 +64,16 @@ class ofApp : public ofBaseApp{
   
     void clearTimerStartHandler(int &args);
     void clearTimerCompleteHandler(int &args);
+  
+
+  // Citation DB
+  ofxCsv db;
+  void loadDB();
+  
+  int lastCitationID;
+  int currentCitationID();
+  std::stack<int,std::vector<int> > * citationIDs;
+  
+  void buildCitationRun();
+  void nextCitation();
 };

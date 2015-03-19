@@ -37,6 +37,10 @@ void ofApp::setup(){
   citeMetaFace.loadFont(bookObliqueFont, 34);
   citeMetaFace.setLineHeight(44);
   citeMetaFace.setWordWrap(true);
+  
+  // Prepare citations
+  
+  loadDB();  
 
   satz1afull = L"ICH DENKE, ES GIBT\nWELTWEIT EINEN MARKT\nFUER VIELLEICHT FUENF\nCOMPUTER.";
   satz1bfull = L"Thomas J. Watson";
@@ -74,8 +78,12 @@ void ofApp::update(){
   zitateTimer.update();
   rewindTimer.update();
   clearTimer.update();
+
+  if (currentCitation == NULL) {
+    return;
+  }
   
-  int maxChars = satz1afull.length();
+  int maxChars = currentCitation->body.length();
   float amount = 0;
   if (zitateTimer.bIsRunning) {
     float currentTimer = zitateTimer.getNormalizedProgress();
@@ -85,7 +93,7 @@ void ofApp::update(){
     amount = ofLerp(0, maxChars, ofMap(currentTimer, 0, 1, 1, 0));
   }
   
-  satz1a = satz1afull.substr(0,(int)ofClamp(amount, 0, maxChars));
+  satz1a = currentCitation->body.substr(0,(int)ofClamp(amount, 0, maxChars));
   
 }
 
@@ -98,19 +106,22 @@ void ofApp::draw(){
   clearTimer.draw( 15 , 25 );
   rewindTimer.draw(15, 40 );
 
-  if (satz1a.length() > 0) {
-    mainFace.drawString(satz1a, 50, 100, ofGetWidth()-100, 500, align);
-  }
-  
-  if (zitateTimer.getNormalizedProgress() >= 0.75 && zitateTimer.getNormalizedProgress() <= 0.95) {
-    citeNameFace.drawString(satz1bfull,50, 550, ofGetWidth()-100, 50, UL2_TEXT_ALIGN_V_TOP|UL2_TEXT_ALIGN_RIGHT);
-    citeMetaFace.drawString(satz1cfull,50, 600, ofGetWidth()-100, 50, UL2_TEXT_ALIGN_V_TOP|UL2_TEXT_ALIGN_RIGHT);
+  if (currentCitation != NULL) {
+    if (satz1a.length() > 0) {
+      mainFace.drawString(satz1a, 50, 100, ofGetWidth()-100, 500, align);
+    }
+    
+    if (zitateTimer.getNormalizedProgress() >= 0.75 && zitateTimer.getNormalizedProgress() <= 0.95) {
+      citeNameFace.drawString(currentCitation->author ,50, 550, ofGetWidth()-100, 50, UL2_TEXT_ALIGN_V_TOP|UL2_TEXT_ALIGN_RIGHT);
+      citeMetaFace.drawString(currentCitation->affiliation,50, 600, ofGetWidth()-100, 50, UL2_TEXT_ALIGN_V_TOP|UL2_TEXT_ALIGN_RIGHT);
+    }
   }
   
 }
 
 void ofApp::zitateTimerStartHandler(int &args) {
   ofLog(OF_LOG_NOTICE,"Zitate Timer Started!");
+  nextCitation();
 }
 
 void ofApp::zitateTimerCompleteHandler(int &args) {
@@ -278,4 +289,46 @@ void ofApp::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
+}
+
+//--------------------------------------------------------------
+void ofApp::loadDB(){
+  db.loadFile(ofToDataPath("zitate.csv"));
+  buildCitationRun();
+}
+
+void ofApp::buildCitationRun(){
+  // gather the ids
+  if (db.numRows == 0) {
+    ofLog(OF_LOG_WARNING, "No data in DB");
+    return;
+  }
+  std:vector<int> ids;
+  for (int r=0; r < db.numRows; r++) {
+    ids.push_back(r);
+  }
+  ofRandomize(ids);
+  if (citationIDs != NULL) {
+    delete citationIDs;
+  }
+  citationIDs = new std::stack<int,std::vector<int> >(ids);
+}
+
+void ofApp::nextCitation(){
+  if (citationIDs == NULL || citationIDs->size() == 0) {
+    buildCitationRun();
+  }
+  
+  int next = currentCitationID();
+  if (next < 0) return;
+  
+  if(currentCitation != NULL) {
+    delete currentCitation;
+  }
+  currentCitation = new Citation(Citation::fromCSVRow(db, next));
+  citationIDs->pop();
+}
+
+int ofApp::currentCitationID() {
+  return citationIDs == NULL ? -1 : citationIDs->top();
 }
