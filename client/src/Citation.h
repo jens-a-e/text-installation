@@ -18,13 +18,15 @@ using namespace wng;
 
 class Citation {
 public:
-  string body,author,affiliation;
-  int id, year;
+  string body,author,affiliation,year,reason;
+  int id;
   
-  Citation(int id, string body, string author, string affiliation, int year, string reason);
+  Citation(int id, string body, string author, string affiliation, string year, string reason);
   ~Citation();
   
   static const Citation fromCSVRow(ofxCsv csv, int row);
+
+  const string toString();
 };
 
 #endif /* defined(__CiteClient__Citation__) */

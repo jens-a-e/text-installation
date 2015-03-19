@@ -9,11 +9,13 @@
 #include "Citation.h"
 
 
-Citation::Citation(int id, string body, string author, string affiliation, int year, string reason) {
+Citation::Citation(int id, string body, string author, string affiliation, string year, string reason) {
   this->id = id;
   this->body = body;
   this->author = author;
   this->affiliation = affiliation;
+  this->year = year;
+  this->reason = reason;
 }
 
 Citation::~Citation(){
@@ -24,14 +26,14 @@ const Citation Citation::fromCSVRow(wng::ofxCsv csv, int row) {
   // Nummer,Zitat,Name,Position,Jahr,Anlass
   
   row += 1; // the first row is a table header
-  string body, author, affiliation, reason;
+  string body, author, affiliation, reason, year;
   
   int id        = csv.getInt(row, 0);
   body          = csv.getString(row, 1);
   author        = csv.getString(row, 2);
   affiliation   = csv.getString(row, 3);
-  int year      = csv.getInt(row, 4);
-  reason        = csv.getString(row, 3);
+  year          = csv.getString(row, 4);
+  reason        = csv.getString(row, 5);
 
   size_t pos;
   string newline = "";
@@ -51,3 +53,14 @@ const Citation Citation::fromCSVRow(wng::ofxCsv csv, int row) {
                   reason
   );
 }
+
+const string Citation::toString() {
+  return "ID: "+ofToString(id)
+  +"\nBody: "+body
+  +"\nAuthor: "+author
+  +"\nAffilitation: "+affiliation
+  +"\nYear: "+year
+  +"\nReason: "+reason
+  +"\n";
+}
+

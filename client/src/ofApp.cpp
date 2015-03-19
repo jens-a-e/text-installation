@@ -19,7 +19,7 @@ void ofApp::setup(){
   mainFace.setSpaceSize(1);
   mainFace.setGlobalDpi(72);
   mainFace.setAlignByPixel(true);
-  mainFace.setWordWrap(false);
+  mainFace.setWordWrap(true);
   mainFace.useProportional(true);
   mainFace.setTextDirection(UL2_TEXT_DIRECTION_LTR);
   mainFace.loadFont(heavyFont, 68);
@@ -91,7 +91,6 @@ void ofApp::update(){
   }
   
   satz1a = currentCitation->body.substr(0,(int)ofClamp(amount, 0, maxChars));
-  
 }
 
 //--------------------------------------------------------------
@@ -109,8 +108,26 @@ void ofApp::draw(){
     }
     
     if (zitateTimer.getNormalizedProgress() >= 0.75 && zitateTimer.getNormalizedProgress() <= 0.95) {
-      citeNameFace.drawString(currentCitation->author ,50, 550, ofGetWidth()-100, 50, UL2_TEXT_ALIGN_V_TOP|UL2_TEXT_ALIGN_RIGHT);
-      citeMetaFace.drawString(currentCitation->affiliation,50, 600, ofGetWidth()-100, 50, UL2_TEXT_ALIGN_V_TOP|UL2_TEXT_ALIGN_RIGHT);
+      
+      citeNameFace.drawString(currentCitation->author ,50, ofGetHeight() - 4*34 - 50, ofGetWidth()-100, 4*34, UL2_TEXT_ALIGN_V_TOP|UL2_TEXT_ALIGN_RIGHT);
+      
+      // affilition[,  year]
+      // reason
+      string meta = "";
+      
+      if (currentCitation->affiliation.length() > 0) {
+        meta += currentCitation->affiliation;
+      }
+      
+      if (currentCitation->year.length() > 0) {
+        meta += (meta.length() == 0 ? "" : ", ") + currentCitation->year;
+      }
+      
+      if (currentCitation->reason.length() > 0) {
+        meta += (meta.length() == 0 ? "" : "\n") + currentCitation->reason;
+      }
+      
+      citeMetaFace.drawString(meta, 50, ofGetHeight()- 4*34 , ofGetWidth()-100, 3*34, UL2_TEXT_ALIGN_V_TOP|UL2_TEXT_ALIGN_RIGHT);
     }
   }
   
@@ -290,7 +307,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 //--------------------------------------------------------------
 void ofApp::loadDB(){
-  db.loadFile(ofToDataPath("zitate-small.csv"));
+  db.loadFile(ofToDataPath("zitate.csv"));
   buildCitationRun();
 }
 
@@ -305,7 +322,15 @@ void ofApp::buildCitationRun(){
   for (int r=0; r < db.numRows-1; r++) {
     ids.push_back(r);
   }
-  ofRandomize(ids);
+  
+  int last_id = currentCitation == NULL ? -1 : currentCitation->id;
+  
+  if (last_id >= 0) {
+    do {
+      ofRandomize(ids);
+    } while(Citation::fromCSVRow(db, ids.at(0)).id != last_id );
+  }
+  
   if (citationIDs != NULL) {
     delete citationIDs;
   }
