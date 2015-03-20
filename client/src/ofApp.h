@@ -5,6 +5,7 @@
 #include "ofxSimpleTimer.h"
 #include "ofxTrueTypeFontUL2.h"
 #include "ofxIO.h"
+#include "ofxNetwork.h"
 #include "Citation.h"
 
 // for ofxCsv:
@@ -42,6 +43,18 @@ public:
   void onDirectoryWatcherItemMovedTo(const DirectoryWatcherManager::DirectoryEvent& evt);
   void onDirectoryWatcherError(const Poco::Exception& exc);
   
+  ofxUDPManager clientNet;
+  ofxUDPManager masterConnection;
+  
+  void setupNetwork();
+  
+  void setupClientNetwork();
+  void clientNetworkUpdate();
+  void broadCastClients(string msg);
+  
+  void setupMasterConnection();
+  void masterConnectionUpdate();
+  
   // We want to use Unicode features to be safe and
   // get better text layout with harfbuzz
   ofxTrueTypeFontUL2 mainFace, citeNameFace, citeMetaFace;
@@ -77,6 +90,7 @@ public:
   void setupTimers();
   void startTimers();
   void updateAllTimers();
+  void showTimersDebug();
 
   // Citation DB
   ofxCsv db;
