@@ -8,3 +8,4 @@ bin/*.app
 
 *.xcodeproj/**/*.xcuserstate
 DerivedData/*
+obj/*
