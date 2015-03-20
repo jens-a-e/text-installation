@@ -2,11 +2,21 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-  ofSetLogLevel(OF_LOG_ERROR);
+//  ofSetLogLevel(OF_LOG_ERROR);
   
   ofSetVerticalSync(true);
   ofBackground(51, 99, 59);
+  
+  watcher.registerAllEvents(this);
+  fileFilter.addExtension("xml");
+  fileFilter.addExtension("csv");
 
+  std::string folderToWatch = ofToDataPath("", true);
+  bool listExistingItemsOnStart = true;
+  
+  watcher.addPath(folderToWatch, listExistingItemsOnStart, &fileFilter);
+  
+  
   string bookObliqueFont  = ofToDataPath("FuturaStd-BookOblique.otf");
   string heavyFont        = ofToDataPath("FuturaStd-Heavy.otf");
   string heavyObliqueFont = ofToDataPath("FuturaStd-HeavyOblique.otf");
@@ -151,7 +161,7 @@ void ofApp::idleTimerCompleteHandler(int &args) {
 }
 
 void ofApp::typeTimerStartHandler(int &args) {
-  ofLog(OF_LOG_NOTICE,"Type Timer Started!");
+//  ofLog(OF_LOG_NOTICE,"Type Timer Started!");
   
   if (currentCitation == NULL) {
     ofLog() << "No citation found, trying again later...";
@@ -165,7 +175,7 @@ void ofApp::typeTimerStartHandler(int &args) {
 }
 
 void ofApp::typeTimerCompleteHandler(int &args) {
-  ofLog(OF_LOG_NOTICE,"Type Timer Complete!");
+//  ofLog(OF_LOG_NOTICE,"Type Timer Complete!");
   if (citeAmount >= currentCitation->body.length()) {
     // Citation is fully displayed
     waitForMeta.start(false);
@@ -175,40 +185,40 @@ void ofApp::typeTimerCompleteHandler(int &args) {
 }
 
 void ofApp::waitForMetaTimerStartHandler(int &args) {
-  ofLog(OF_LOG_NOTICE,"WaitForMeta Timer Started!");
+//  ofLog(OF_LOG_NOTICE,"WaitForMeta Timer Started!");
 }
 
 void ofApp::waitForMetaTimerCompleteHandler(int &args) {
-  ofLog(OF_LOG_NOTICE,"WaitForMeta Complete!");
+//  ofLog(OF_LOG_NOTICE,"WaitForMeta Complete!");
   showMeta.start(false);
 }
 
 void ofApp::showMetaTimerStartHandler(int &args) {
-  ofLog(OF_LOG_NOTICE,"WaitForMeta Timer Started!");
+//  ofLog(OF_LOG_NOTICE,"WaitForMeta Timer Started!");
 }
 
 void ofApp::showMetaTimerCompleteHandler(int &args) {
-  ofLog(OF_LOG_NOTICE,"ShowMeta Complete!");
+//  ofLog(OF_LOG_NOTICE,"ShowMeta Complete!");
   waitRewind.start(false);
 }
 
 void ofApp::waitRewindTimerStartHandler(int &args) {
-  ofLog(OF_LOG_NOTICE,"ShowMeta Timer Started!");
+//  ofLog(OF_LOG_NOTICE,"ShowMeta Timer Started!");
 }
 
 void ofApp::waitRewindTimerCompleteHandler(int &args) {
-  ofLog(OF_LOG_NOTICE,"WaitRewind Complete!");
+//  ofLog(OF_LOG_NOTICE,"WaitRewind Complete!");
   rewind.start(false);
 }
 
 void ofApp::rewindTimerStartHandler(int &args) {
-  ofLog(OF_LOG_NOTICE,"Rewind Timer Started!");
+//  ofLog(OF_LOG_NOTICE,"Rewind Timer Started!");
   citeAmount--;
   cite_partial = currentCitation->body.substr(0,citeAmount);
 }
 
 void ofApp::rewindTimerCompleteHandler(int &args) {
-  ofLog(OF_LOG_NOTICE,"Rewind Complete!");
+//  ofLog(OF_LOG_NOTICE,"Rewind Complete!");
   if (citeAmount > 0) {
     rewind.start(false);
   } else {
@@ -356,7 +366,7 @@ void ofApp::windowResized(int w, int h){
 
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
-
+  ofLog() << msg.message;
 }
 
 //--------------------------------------------------------------

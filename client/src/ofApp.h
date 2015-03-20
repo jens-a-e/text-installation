@@ -4,11 +4,13 @@
 #include "ofxCsv.h"
 #include "ofxSimpleTimer.h"
 #include "ofxTrueTypeFontUL2.h"
+#include "ofxIO.h"
 #include "Citation.h"
 
 // for ofxCsv:
 using namespace wng;
 using namespace std;
+using namespace ofx::IO;
 
 class ofApp : public ofBaseApp{
 
@@ -28,6 +30,39 @@ public:
   void gotMessage(ofMessage msg);
 
   bool bDebug = false;
+  
+  DirectoryWatcherManager watcher;
+  FileExtensionFilter fileFilter;
+  
+  void onDirectoryWatcherItemAdded(const DirectoryWatcherManager::DirectoryEvent& evt)
+  {
+    ofSendMessage("Added:    " + evt.item.path());
+  }
+  
+  void onDirectoryWatcherItemRemoved(const DirectoryWatcherManager::DirectoryEvent& evt)
+  {
+    ofSendMessage("Removed:  " + evt.item.path());
+  }
+  
+  void onDirectoryWatcherItemModified(const DirectoryWatcherManager::DirectoryEvent& evt)
+  {
+    ofSendMessage("Modified: " + evt.item.path());
+  }
+  
+  void onDirectoryWatcherItemMovedFrom(const DirectoryWatcherManager::DirectoryEvent& evt)
+  {
+    ofLogNotice("ofApp::onDirectoryWatcherItemMovedFrom") << "Moved From: " << evt.item.path();
+  }
+  
+  void onDirectoryWatcherItemMovedTo(const DirectoryWatcherManager::DirectoryEvent& evt)
+  {
+    ofLogNotice("ofApp::onDirectoryWatcherItemMovedTo") << "Moved To: " << evt.item.path();
+  }
+  
+  void onDirectoryWatcherError(const Poco::Exception& exc)
+  {
+    ofLogError("ofApp::onDirectoryWatcherError") << "Error: " << exc.displayText();
+  }
   
   // We want to use Unicode features to be safe and
   // get better text layout with harfbuzz
