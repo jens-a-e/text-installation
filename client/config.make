@@ -18,7 +18,7 @@ OF_ROOT = ../../..
 #       (default) PROJECT_ROOT = . (this directory)
 #
 ################################################################################
-PROJECT_ROOT = .
+PROJECT_ROOT = $(shell pwd)
 
 ################################################################################
 # PROJECT SPECIFIC CHECKS
@@ -79,7 +79,7 @@ PROJECT_ROOT = .
 # add a runtime path to search for those shared libraries, since they aren't
 # incorporated directly into the final executable application binary.
 # TODO: should this be a default setting?
-# PROJECT_LDFLAGS=-Wl,-rpath=./libs
+PROJECT_LDFLAGS=-Wl,-rpath=./libs
 
 ################################################################################
 # PROJECT DEFINES
@@ -142,3 +142,23 @@ PROJECT_ROOT = .
 ################################################################################
 # PROJECT_CXX =
 # PROJECT_CC =
+
+# ADDONS = $(OF_ROOT)/addons
+
+# XML_SETTINGS_SRC = $(ADDONS)/ofxXmlSettings/libs $(_ADDONS)/ofxXmlSettings/src
+# NETWORK_SRC = $(ADDONS)/ofxNetwork/src
+
+internal_addon_path = $(PROJECT_ROOT)/addons
+
+IO_DIR = $(internal_addon_path)/ofxIO
+IO_SRC = $(IO_DIR)/libs/ofxIO/src $(IO_DIR)/libs/ofxIO/include $(IO_DIR)/src
+
+TIMER_SRC = $(internal_addon_path)/ofxSimpleTimer/src
+CSV_SRC = $(internal_addon_path)/ofxCsv/src
+
+HARF_SRC = $(internal_addon_path)/ofxTrueTypeFontUL2/libs/harfbuzz/include $(internal_addon_path)/ofxTrueTypeFontUL2/src
+
+ADDON_SOURCES = $(XML_SETTINGS_SRC) $(NETWORK_SRC) $(IO_SRC) $(TIMER_SRC) $(CSV_SRC)
+
+PROJECT_EXTERNAL_SOURCE_PATHS = $(ADDON_SOURCES)
+
