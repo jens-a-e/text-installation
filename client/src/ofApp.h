@@ -30,39 +30,17 @@ public:
   void gotMessage(ofMessage msg);
 
   bool bDebug = false;
+  int citeAmount = 0;
   
   DirectoryWatcherManager watcher;
   FileExtensionFilter fileFilter;
   
-  void onDirectoryWatcherItemAdded(const DirectoryWatcherManager::DirectoryEvent& evt)
-  {
-    ofSendMessage("Added:    " + evt.item.path());
-  }
-  
-  void onDirectoryWatcherItemRemoved(const DirectoryWatcherManager::DirectoryEvent& evt)
-  {
-    ofSendMessage("Removed:  " + evt.item.path());
-  }
-  
-  void onDirectoryWatcherItemModified(const DirectoryWatcherManager::DirectoryEvent& evt)
-  {
-    ofSendMessage("Modified: " + evt.item.path());
-  }
-  
-  void onDirectoryWatcherItemMovedFrom(const DirectoryWatcherManager::DirectoryEvent& evt)
-  {
-    ofLogNotice("ofApp::onDirectoryWatcherItemMovedFrom") << "Moved From: " << evt.item.path();
-  }
-  
-  void onDirectoryWatcherItemMovedTo(const DirectoryWatcherManager::DirectoryEvent& evt)
-  {
-    ofLogNotice("ofApp::onDirectoryWatcherItemMovedTo") << "Moved To: " << evt.item.path();
-  }
-  
-  void onDirectoryWatcherError(const Poco::Exception& exc)
-  {
-    ofLogError("ofApp::onDirectoryWatcherError") << "Error: " << exc.displayText();
-  }
+  void onDirectoryWatcherItemAdded(const DirectoryWatcherManager::DirectoryEvent& evt);
+  void onDirectoryWatcherItemRemoved(const DirectoryWatcherManager::DirectoryEvent& evt);
+  void onDirectoryWatcherItemModified(const DirectoryWatcherManager::DirectoryEvent& evt);
+  void onDirectoryWatcherItemMovedFrom(const DirectoryWatcherManager::DirectoryEvent& evt);
+  void onDirectoryWatcherItemMovedTo(const DirectoryWatcherManager::DirectoryEvent& evt);
+  void onDirectoryWatcherError(const Poco::Exception& exc);
   
   // We want to use Unicode features to be safe and
   // get better text layout with harfbuzz
@@ -96,15 +74,22 @@ public:
   void rewindTimerStartHandler(int &args);
   void rewindTimerCompleteHandler(int &args);
 
+  void setupTimers();
+  void startTimers();
+  void updateAllTimers();
 
   // Citation DB
   ofxCsv db;
+  string dbPath;
   void loadDB();
   
   int lastCitationID;
-  int currentCitationID();
   std::stack<int,std::vector<int> > * citationIDs;
   
+  void setupDB();
+  
+  int currentCitationID();
   void buildCitationRun();
   void nextCitation();
+  
 };

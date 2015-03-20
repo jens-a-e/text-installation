@@ -11,6 +11,10 @@
 		B410C2621ABC044200D29C06 /* FileExtensionFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B410C2491ABC01A300D29C06 /* FileExtensionFilter.cpp */; };
 		B410C2631ABC054B00D29C06 /* DirectoryUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B410C2461ABC01A300D29C06 /* DirectoryUtils.cpp */; };
 		B410C2641ABC054B00D29C06 /* DirectoryWatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B410C2471ABC01A300D29C06 /* DirectoryWatcher.cpp */; };
+		B410C2661ABC183700D29C06 /* ofAppDirectoryWatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B410C2651ABC183700D29C06 /* ofAppDirectoryWatcher.cpp */; };
+		B410C2681ABC1CD200D29C06 /* ofAppTimerStates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B410C2671ABC1CD200D29C06 /* ofAppTimerStates.cpp */; };
+		B410C26A1ABC1D9B00D29C06 /* ofAppDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B410C2691ABC1D9B00D29C06 /* ofAppDB.cpp */; };
+		B410C26C1ABC1E1600D29C06 /* ofAppEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B410C26B1ABC1E1600D29C06 /* ofAppEvents.cpp */; };
 		B4CF47041ABAA5F6000D7B25 /* Citation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4CF47021ABAA5F6000D7B25 /* Citation.cpp */; };
 		B4CF47131ABAF79F000D7B25 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4CF47121ABAF79F000D7B25 /* ofApp.cpp */; };
 		B4EC41D11AA5C001002A230B /* ofxCsv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4EC41281AA5BFE0002A230B /* ofxCsv.cpp */; };
@@ -140,6 +144,10 @@
 		B410C25B1ABC01A300D29C06 /* snappy.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = snappy.cc; sourceTree = "<group>"; };
 		B410C25C1ABC01A300D29C06 /* snappy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = snappy.h; sourceTree = "<group>"; };
 		B410C2601ABC01A300D29C06 /* ofxIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxIO.h; sourceTree = "<group>"; };
+		B410C2651ABC183700D29C06 /* ofAppDirectoryWatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofAppDirectoryWatcher.cpp; sourceTree = "<group>"; };
+		B410C2671ABC1CD200D29C06 /* ofAppTimerStates.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofAppTimerStates.cpp; sourceTree = "<group>"; };
+		B410C2691ABC1D9B00D29C06 /* ofAppDB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofAppDB.cpp; sourceTree = "<group>"; };
+		B410C26B1ABC1E1600D29C06 /* ofAppEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofAppEvents.cpp; sourceTree = "<group>"; };
 		B4CF47021ABAA5F6000D7B25 /* Citation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Citation.cpp; sourceTree = "<group>"; };
 		B4CF47031ABAA5F6000D7B25 /* Citation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Citation.h; sourceTree = "<group>"; };
 		B4CF47121ABAF79F000D7B25 /* ofApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofApp.cpp; sourceTree = "<group>"; };
@@ -647,8 +655,12 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				B4CF47121ABAF79F000D7B25 /* ofApp.cpp */,
-				B4CF47021ABAA5F6000D7B25 /* Citation.cpp */,
+				B410C26B1ABC1E1600D29C06 /* ofAppEvents.cpp */,
+				B410C2651ABC183700D29C06 /* ofAppDirectoryWatcher.cpp */,
+				B410C2691ABC1D9B00D29C06 /* ofAppDB.cpp */,
+				B410C2671ABC1CD200D29C06 /* ofAppTimerStates.cpp */,
 				B4CF47031ABAA5F6000D7B25 /* Citation.h */,
+				B4CF47021ABAA5F6000D7B25 /* Citation.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -749,6 +761,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B410C2681ABC1CD200D29C06 /* ofAppTimerStates.cpp in Sources */,
 				B4EC41F51AA5D8A8002A230B /* tinyxmlerror.cpp in Sources */,
 				B4EC41F61AA5D8A8002A230B /* tinyxmlparser.cpp in Sources */,
 				B4EC41D11AA5C001002A230B /* ofxCsv.cpp in Sources */,
@@ -757,9 +770,12 @@
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				B410C2611ABC040E00D29C06 /* DirectoryWatcherManager.cpp in Sources */,
 				B410C2621ABC044200D29C06 /* FileExtensionFilter.cpp in Sources */,
+				B410C2661ABC183700D29C06 /* ofAppDirectoryWatcher.cpp in Sources */,
 				B410C2641ABC054B00D29C06 /* DirectoryWatcher.cpp in Sources */,
 				B4EC41F41AA5D8A8002A230B /* tinyxml.cpp in Sources */,
 				B4EC41F71AA5D8A8002A230B /* ofxXmlSettings.cpp in Sources */,
+				B410C26C1ABC1E1600D29C06 /* ofAppEvents.cpp in Sources */,
+				B410C26A1ABC1D9B00D29C06 /* ofAppDB.cpp in Sources */,
 				B4CF47131ABAF79F000D7B25 /* ofApp.cpp in Sources */,
 				B410C2631ABC054B00D29C06 /* DirectoryUtils.cpp in Sources */,
 				B4EC41D31AA5C001002A230B /* ofxTrueTypeFontUL2.cpp in Sources */,
