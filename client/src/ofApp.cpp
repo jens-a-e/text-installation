@@ -68,15 +68,6 @@ void ofApp::draw(){
   ofBackground(51, 99, 59);
   ofSetColor(225);
   
-  if (bDebug) {
-    int y = 10;
-    for(std::vector<ofxSimpleTimer*>::iterator timer = timers.begin(); timer != timers.end(); ++timer) {
-      (*timer)->draw( 15 , y );
-      y += 15;
-    }
-  }
-  
-
   if (currentCitation != NULL) {
     if (type.bIsRunning || waitForMeta.bIsRunning || showMeta.bIsRunning || waitRewind.bIsRunning || rewind.bIsRunning) {
       mainFace.drawString(cite_partial, 50, 100, ofGetWidth()-100, 500, align);
@@ -104,7 +95,14 @@ void ofApp::draw(){
       
       citeMetaFace.drawString(meta, 50, ofGetHeight()- 4*34 , ofGetWidth()-100, 3*34, UL2_TEXT_ALIGN_V_TOP|UL2_TEXT_ALIGN_RIGHT);
     }
+  } else {
+    if (bDebug) {
+      ofBackground(255, 0, 0);
+      mainFace.drawString("Debug: No citation found!", 50, 100);
+    }
   }
+  
+  showTimersDebug();
   
 }
 

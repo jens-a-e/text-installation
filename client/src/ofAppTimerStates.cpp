@@ -52,6 +52,16 @@ void ofApp::updateAllTimers() {
   }
 }
 
+void ofApp::showTimersDebug() {
+  if (bDebug) {
+    int y = 10;
+    for(std::vector<ofxSimpleTimer*>::iterator timer = timers.begin(); timer != timers.end(); ++timer) {
+      (*timer)->draw( 15 , y );
+      y += 15;
+    }
+  }
+}
+
 void ofApp::idleTimerStartHandler(int &args) {
   ofLog(OF_LOG_NOTICE,"Idle Timer Started!");
 }
