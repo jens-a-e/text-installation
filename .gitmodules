@@ -1,6 +1,6 @@
 [submodule "client/addons/ofxCsv"]
 	path = client/addons/ofxCsv
-	url = https://github.com/paulvollmer/ofxCsv.git
+url=https://github.com/jens-a-e/ofxCsv.git
 [submodule "client/addons/ofxTextSuite"]
 	path = client/addons/ofxTextSuite
 	url = https://github.com/lukemalcolm/ofxTextSuite.git
