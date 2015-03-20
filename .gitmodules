@@ -1,15 +1,12 @@
 [submodule "client/addons/ofxCsv"]
 	path = client/addons/ofxCsv
 	url=https://github.com/jens-a-e/ofxCsv.git
-[submodule "client/addons/ofxTextSuite"]
-	path = client/addons/ofxTextSuite
-	url = https://github.com/lukemalcolm/ofxTextSuite.git
 [submodule "client/addons/ofxTrueTypeFontUL2"]
 	path = client/addons/ofxTrueTypeFontUL2
 	url = https://github.com/kentaroid/ofxTrueTypeFontUL2.git
 [submodule "client/addons/ofxSimpleTimer"]
 	path = client/addons/ofxSimpleTimer
 	url = https://github.com/HeliosInteractive/ofxSimpleTimer.git
-[submodule "client/addons/ofxPocoDirectoryWatcher"]
-	path = client/addons/ofxPocoDirectoryWatcher
-	url = https://github.com/Geistyp/ofxPocoDirectoryWatcher
+[submodule "client/addons/ofxIO"]
+	path = client/addons/ofxIO
+	url = https://github.com/bakercp/ofxIO
