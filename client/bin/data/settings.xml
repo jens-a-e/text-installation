@@ -1,0 +1,17 @@
+<settings>
+  <fonts>
+    <main>
+        <letter-spacing>0.1</letter-spacing>
+        <size>68</size>
+        <line-height>100</line-height>
+    </main>
+    <main-large>
+      <letter-spacing>0.1</letter-spacing>
+      <size>140</size>
+      <line-height>160</line-height>
+    </main-large>
+  </fonts>
+  <use-large-from>50</use-large-from>
+  <debug>0</debug>
+  <fullscreen>0</fullscreen>
+</settings>

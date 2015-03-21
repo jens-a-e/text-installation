@@ -23,17 +23,17 @@ Citation::~Citation(){
 }
 
 Citation* Citation::fromCSVRow(wng::ofxCsv csv, int row) {
-  // Nummer,Zitat,Name,Position,Jahr,Anlass
+  // [Row = ID]: Zitat,Name,Position,Jahr,Anlass
   
   row += 1; // the first row is a table header
   string body, author, affiliation, reason, year;
   
-  int id        = csv.getInt(row, 0);
-  body          = csv.getString(row, 1);
-  author        = csv.getString(row, 2);
-  affiliation   = csv.getString(row, 3);
-  year          = csv.getString(row, 4);
-  reason        = csv.getString(row, 5);
+  int id        = row;
+  body          = csv.getString(row, 0);
+  author        = csv.getString(row, 1);
+  affiliation   = csv.getString(row, 2);
+  year          = csv.getString(row, 3);
+  reason        = csv.getString(row, 4);
 
   size_t pos;
   string newline = "";

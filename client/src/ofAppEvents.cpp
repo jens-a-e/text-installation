@@ -13,6 +13,10 @@ void ofApp::keyPressed(int key){
   string strDirection = "";
   string strAlign = "";
   switch(key){
+    case '#':
+      bAlignByPixel = !bAlignByPixel;
+      mainFace.setAlignByPixel(bAlignByPixel);
+      mainFaceLarge.setAlignByPixel(bAlignByPixel);
     case 'w':
     case 'W':
       mainFace.setWordWrap(!mainFace.getWordWrap());

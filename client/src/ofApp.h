@@ -6,6 +6,7 @@
 #include "ofxTrueTypeFontUL2.h"
 #include "ofxIO.h"
 #include "ofxNetwork.h"
+#include "ofxXmlSettings.h"
 #include "Citation.h"
 
 // for ofxCsv:
@@ -30,8 +31,11 @@ public:
   void dragEvent(ofDragInfo dragInfo);
   void gotMessage(ofMessage msg);
 
-  bool bDebug = false;
-  int citeAmount = 0;
+  bool bDebug;
+  int citeAmount;
+  static bool bAlignByPixel;
+  
+  ofxXmlSettings Settings;
   
   DirectoryWatcherManager watcher;
   FileExtensionFilter fileFilter;
@@ -57,7 +61,7 @@ public:
   
   // We want to use Unicode features to be safe and
   // get better text layout with harfbuzz
-  ofxTrueTypeFontUL2 mainFace, citeNameFace, citeMetaFace;
+  ofxTrueTypeFontUL2 mainFace, mainFaceLarge, citeNameFace, citeMetaFace;
 
   string cite_partial;
 

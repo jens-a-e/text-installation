@@ -1,57 +1,60 @@
-Nummer,Zitat,Name,Position,Jahr,Anlass
-1,Computer der Zukunft werden nicht mehr als 1.5 Tonnen wiegen.,Die Zeitschrift 'Populäre Mechanik',,1949,
-2,"Ich denke, es gibt weltweit einen Markt für vielleicht fünf Computer.",Thomas J. Watson,Vorsitzender von IBM,1943,
-3,Internet ist nur ein Hype.,Bill Gates,,1993,
-4,"Nun kann ich Ihnen versichern: Datenverarbeitung ist eine Modeerscheinung, die das Jahr nicht überdauern wird.",Der verantwortliche Redakteur des Bereichs Wirtschaftsliteratur des Verlages Prentice Hall,,1957,
-5,"Sobald ich eine sinnvolle Anwendung für einen Computer finde, werde ich mir einen besorgen.",Ken Olsen,Gründer und Präsident der Digital Equipment Corporation,,
-6,"Es gibt keinen Grund, warum irgend jemand in der Zukunft einen Computer bei sich zu Hause haben sollte.",Ken Olsen,Gründer und Präsident der Digital Equipment Corporation,1977,
-7,640 Kilobyte sind genug für jeden.,Bill Gates,,1981,
-8,Computer sind nutzlos. Sie können nur Antworten geben.,Pablo Picasso,,1946,
-9,Aber ... wozu ist es gut?,IBM-Ingenieur,,1968,Kommentar zum Mikrochip
-10,"Es scheint, dass wir die Grenzen dessen erreicht haben, was mit Computer-Technologie möglich ist.",John von Neumann,,1949,
-11,"Dann gingen wir zu Hewlett-Packard, und sie sagten, 'Hey, wir brauchen Sie nicht, Sie haben das College noch nicht abgeschlossen.'",Steve Jobs,Apple,,"über seine Versuche, Atari und Hewlett-Packard Company an seinem und Steve Wozniak Personal Computer zu interessieren"
-12,Einkäufe per Computer werden niemals die Freuden des persönlichen Einkaufens ersetzen können.,John Naisbitt,amerikanischer Prognostiker,,
-13,Dafür hat die amerikanische Durchschnittsfamilie keine Zeit.,Die New York Times,,1939,über die erste kommerzielle TV-Sendung
-14,Wer braucht eigentlich diese Silberscheibe?,Jan Timmer,Phillips-Vorstand,1982,zur Compact Disc
-15,"Na ja gut, es gibt das Internet. Aber es dauert zu lange, bis Sie sich dort alles zusammengesucht haben, und dann sollten Sie es auch noch an diesem unsäglich doofen Bildschirm lesen. Da hilft die Zeitung und sagt: Das ist heute für dich wichtig.",Michael Ringier,Verleger,2007,
-16,"Für einen Reporter, der unterwegs Notizen aufschreiben will, ist das [ein Notebook] interessant. Aber für den Durchschnittsnutzer sind diese Geräte nicht so nützlich und es gibt auch kaum Software dafür.",Steve Jobs,Apple,1985,
-17,"Es gibt nichts Neues mehr. Alles, was man erfinden kann, ist schon erfunden worden.",Charles H. Duell,US-Patentamt,1899,
-18,Das 'Telefon' hat zu viele ernsthaft zu bedenkende Mängel für ein Kommunikationsmittel. Das Gerät ist von Natur aus von keinem Wert für uns.,Western Union,,1876,Interne Kurzinformation
-19,"Die drahtlose Musikbox hat keinen denkbaren kommerziellen Wert. Wer würde für eine Nachricht bezahlen, die zu niemanden direkt gesendet wird?",David Sarnoff,,1920er,Rückmeldung zur Investition in das Radio
-20,Facebook - das ist doch nur ein Verzeichnis im Web.,Rupert Murdoch,Medienmogul,2008,
-21,"Aus dem iPad wird nichts, Netbooks gehört die Zukunft.",Bill Gates,,2010,
-22,E-Mails sind ein absolut unverkaufbares Produkt.,Ian Sharp,Sharp Associates,1979,
-23,"Wer hat jemals davon gehört, dass die US-Regierung die Informationen missbraucht hat?",Larry Ellison,Oracle,2013,zum Überwachungsskandal
-24,Cloud Computing? Eine verrückte Modeerscheinung!,Larry Ellison,Oracle,2008,
-25,In zehn Jahren ist Google tot.,Christian DuMont Schütte,Gesellschafter des Verlags DuMont Schauberg,2007,
-26,Schon 1977 wird es einen perfekten Übersetzungscomputer mit korrekter Grammatik geben.,amerikanische Trendstudie,,1966,
-27,In zwei Jahren wird das Spam-Problem gelöst sein.,Bill Gates,,2004,
-28,"Wikipedia ist nur der Anfang ... Vom Erfolg der Enzyklopädie können wir lernen, neue Systeme zu bauen, die Probleme in Bildung, Verwaltung, Gesundheit, Gemeindearbeit und zahllosen anderen menschlichen Bereichen lösen.",Steve Johnson,Autor,,
-29,"Smart sind nicht diese Geräte oder die sie benutzen, sondern die sie uns anpreisen, um unermessliche Reichtümer anzuhäufen und gewöhnliche Menschen zu kontrollieren.",Hans Magnus Enzensberger,Autor,2014,
-30,"Online-Banking ist ein Segen, aber nur für Geheimdienste und für Kriminelle.",Hans Magnus Enzensberger,Autor,2014,
-31,"Ihre Privatsphäre gibt es nicht mehr, finden Sie sich damit ab.",Scott McNealy,Chef von Sun Microsystems,1999,
-32,"Es könnte sein, dass wir auf eine Gesellschaft zusteuern, die zwar immer reicher wird, in der alle Wohlstandsgewinne aber an diejenigen gehen, denen die Roboter gehören.",Paul Krugman,Wirtschaftsnobelpreisträger,,
-33,Die Virenproblematik ist nur ein temporäres Phänomen und wird in ein paar Jahren verschwunden sein.,John McAfee,Gründer von McAfee,1988,
-34,"Ich sage voraus, dass sich das Internet bald zu einer Supernova aufbläht und 1996 katastrophal kollabieren wird.",Robert Metcalfe,Erfinder des Ethernets,1995,
-35,Das Internet? Gibt's diesen Blödsinn immer noch?,Homer J. Simpson,Sicherheitsinspektor des Kernkraftwerks Springfield,,
-36,"Via Datennetz werden erheblich mehr Menschen als heute an der Verbreitung von Nachrichten beteiligt sein. Die Datenautobahn wird zum wichtigsten Werkzeug der Demokratie, das jemals erfunden wurde.",Bill Gates,,,
-37,Zur Jahrhundertwende werden wir in einer papierlosen Gesellschaft leben.,Roger Smith,General Motors,,
-38,"Das Internet ist eine Spielerei für Computerfreaks, wir sehen darin keine Zukunft.",Ron Sommer,Telekom-Chef,,
-39,"In diesem Jahrtausend wird es zwei Arten von Geschäften geben: Die im Internet und die, die es nicht gibt.",Bill Gates,,,
-40,"Die Technologiekonzerne Electrolux und Ericsson arbeiten unter Hochdruck an einem internettauglichen Kühlschrank. Dieser bestellt selbstständig Joghurts im Supermarkt nach und warnt, bevor die Milch sauer wird. Schon nächstes Jahr sollen Prototypen in 200 dänischen Haushalten getestet werden.",Der Beobachter,Schweizer Zeitschrift,1999,
-41,"Die Märkte erlauben uns, Dinge mit Informationen zu tun, die wir niemals haben tun können.",Gus Hunt,Cheftechniker der CIA,2011,
-42,"Der Siegeszug des Internets macht auch vor dem Auto nicht Halt. General Motors, Daimler Chrysler und Ford wollen 2001 Modelle lancieren, die dem Fahrer unterwegs seine E-Mail und Nachrichten vorlesen, während sich der Mitfahrer durchs Web klickt.",Cash,Schweizer Wirtschaftzeitung,1999,
-43,Jede hinreichend fortgeschrittene Technologie ist von Magie nicht mehr zu unterscheiden.,Arthur C. Clarke,Physiker und Autor,1973,aus „Profiles of the Future“
-44,2045 wird artifizielle Intelligenz die menschliche überholen.,Ray Kurzweil,,,
-45,Auf Dauer werde der Mensch ohne Körper existieren und als reine Software unsterblich.,Ray Kurzweil,,1999,aus „homo s@piens“
-46,"Die viereckigen Kisten, die wir heute mit uns rumtragen, werden im Jahr 2010 verschwunden sein. Computer befinden sich dann in Brillengläsern oder Kontaktlinsen, sind Teil von Hemden oder Sakkos",Ray Kurzweil,,1999,aus „homo s@piens“
-47,"Die erste ultra-intelligente Maschine ist die letzte Erfindung, die der Mensch überhaupt noch machen muss.",Irving John Good,Statistiker,1965,
-48,Das Internet ist für uns alle Neuland.,Angela Merkel,Bundeskanzlerin,2013,
-49,"Spezielle Module wie Bio- oder Gehirninterfaces erweitern [im Jahr 2050] die Funktionalität und ermöglichen eine direkte Ankoppelung und Steuerung technischer Geräte (z. B. Roboter, Computer oder auch Prothesen) und Prozesse.",Fraunhofer ISIT,,,
-50,Elektroschrott verachtfach sich bis 2020.,spiegel online,,2010,
-51,"Ausbildung, Studium und Arbeit erfolgen überwiegend über das Netz. E-Government und E-Voting sind etabliert, die klassischen Verwaltungsämter größtenteils virtualisiert.",Fraunhofer ISIT,,,
-52,"Funktionale Systemoberflächen in Arbeitsräumen, Wohnräumen, Transportmitteln und Kleidung haben [im Jahr 2050] beispielsweise PC, Mobiltelefon und mp3 verdrängt.",Fraunhofer ISIT,,,
-53,"Ob in der Wohnung, am Arbeitsplatz oder unterwegs, der Mensch ist permanent mit dem Internet verbunden. Arbeits-, Transport- oder Betriebsmittel sind über das Internet vernetzt.",Fraunhofer ISIT,,,
-54,"schon können wir uns dem zwang der digitalen methode nicht mehr entziehen. der wandel in unserer kultur, in unserem verhalten, in unserem verständnis der welt ist beeindruckend. fast jeder mensch hat bereits eine zweite natur, seine existenz als größe von zahlen und werten.",Otl Aicher,,1978,
-55,"Einst lebten wir auf dem Land, dann in Städten und von jetzt an im Netz.",Mark Zuckerberg,,2010,aus dem Film „The Social Network“
-56,Bald kommt die Technik ohne uns aus.,Manfred Hinrich,,,
+Zitat,Name,Position,Jahr,Anlass
+"In Zukunft könnte es Computer geben, die weniger als 1,5 Tonnen wiegen.",Die Zeitschrift Popular Mechanics,,1949,
+"Ich denke, es gibt weltweit einen Markt für vielleicht fünf Computer.",Thomas J. Watson,Vorsitzender von IBM,1943,
+The internet is just a hype.,Bill Gates,Gründer von Microsoft,1993,
+"Datenverarbeitung ist eine Modeerscheinung, die das Jahr nicht überdauern wird.",ein amerikanischer Verleger,,1957,
+"Sobald ich eine sinnvolle Anwendung für einen Computer finde, werde ich mir einen besorgen.",Ken Olsen,Gründer und Präsident der Digital Equipment Corporation,,
+"Es gibt keinen Grund, weshalb jemand einen Computer für zu Hause haben sollte.",Ken Olsen,Gründer und Präsident der Digital Equipment Corporation,1977,
+640 Kilobyte sind genug für jeden.,Bill Gates,Gründer von Microsoft,1981,
+"Computers are useless, they only can give answers.",Pablo Picasso,,1946,
+What the hell is it good for?!,Robert Lloyd,Engineer at IBM,1968,about microprocessors
+"Es scheint, dass wir die Grenzen dessen erreicht haben, was mit Computer-Technologie möglich ist.",John von Neumann,,1949,
+Einkäufe per Computer werden niemals die Freuden des persönlichen Einkaufens ersetzen können.,John Naisbitt,amerikanischer Prognostiker,,
+Dafür hat die amerikanische Durchschnittsfamilie keine Zeit.,Die New York Times,,1939,über die erste kommerzielle TV-Sendung
+Wer braucht eigentlich diese Silberscheibe?,Jan Timmer,Phillips-Vorstand,1982,zur Compact Disc
+"Es gibt nichts Neues mehr. Alles, was man erfinden kann, ist schon erfunden worden.",Charles H. Duell,US-Patentamt,1899,
+Die drahtlose Musikbox hat keinen denkbaren kommerziellen Wert.,David Sarnoff,,1920er,Rückmeldung zur Investition in das Radio
+Facebook - das ist doch nur ein Verzeichnis im Web.,Rupert Murdoch,Medienmogul,2008,
+"Aus dem iPad wird nichts, Netbooks gehört die Zukunft.",Bill Gates,Gründer von Microsoft,2010,
+E-Mails sind ein absolut unverkaufbares Produkt.,Ian Sharp,Sharp Associates,1979,
+"Wer hat jemals davon gehört, dass die US-Regierung die Informationen missbraucht hat?",Larry Ellison,Oracle,2013,zum Überwachungsskandal
+Cloud Computing? Eine verrückte Modeerscheinung!,Larry Ellison,Oracle,2008,
+In zehn Jahren ist Google tot.,Christian DuMont Schütte,Gesellschafter des Verlags DuMont Schauberg,2007,
+Schon 1977 wird es einen perfekten Übersetzungscomputer mit korrekter Grammatik geben.,amerikanische Trendstudie,,1966,
+In zwei Jahren wird das Spam-Problem gelöst sein.,Bill Gates,Gründer von Microsoft,2004,
+"Online-Banking ist ein Segen, aber nur für Geheimdienste und für Kriminelle.",Hans Magnus Enzensberger,Autor,2014,
+"Ihre Privatsphäre gibt es nicht mehr, finden Sie sich damit ab.",Scott McNealy,Chef von Sun Microsystems,1999,
+Die Virenproblematik ist nur ein temporäres Phänomen und wird in ein paar Jahren verschwunden sein.,John McAfee,Gründer von McAfee,1988,
+"Ich sage voraus, dass sich das Internet bald zu einer Supernova aufbläht und 1996 katastrophal kollabieren wird.",Robert Metcalfe,Erfinder des Ethernets,1995,
+Das Internet? Gibt's diesen Blödsinn immer noch?,Homer J. Simpson,Sicherheitsinspektor des Kernkraftwerks Springfield,,
+"Die Datenautobahn wird zum wichtigsten Werkzeug der Demokratie, das jemals erfunden wurde.",Bill Gates,Gründer von Microsoft,,
+Zur Jahrhundertwende werden wir in einer papierlosen Gesellschaft leben.,Roger Smith,General Motors,1986,
+"Das Internet ist eine Spielerei für Computerfreaks, wir sehen darin keine Zukunft.",Ron Sommer,Telekom-Chef,1990,
+"In diesem Jahrtausend wird es zwei Arten von Geschäften geben: Die im Internet und die, die es nicht gibt.",Bill Gates,Gründer von Microsoft,,
+"Die Märkte erlauben uns, Dinge mit Informationen zu tun, die wir niemals haben tun können.",Gus Hunt,Cheftechniker der CIA,2011,
+Jede hinreichend fortgeschrittene Technologie ist von Magie nicht mehr zu unterscheiden.,Arthur C. Clarke,Physiker und Autor,1973,aus »Profiles of the Future«
+2045 wird artifizielle Intelligenz die menschliche überholen.,Ray Kurzweil,Director of Engineering bei Google,2014,
+Auf Dauer werde der Mensch ohne Körper existieren und als reine Software unsterblich.,Ray Kurzweil,Director of Engineering bei Google,1999,aus »homo s@piens«
+"Die viereckigen Kisten, die wir heute mit uns rumtragen, werden im Jahr 2010 verschwunden sein.",Ray Kurzweil,Director of Engineering bei Google,1999,aus »homo s@piens«
+"Die erste ultra-intelligente Maschine ist die letzte Erfindung, die der Mensch überhaupt noch machen muss.",Irving John Good,Statistiker,1965,
+Das Internet ist für uns alle Neuland.,Angela Merkel,Bundeskanzlerin,2013,
+"Ausbildung, Studium und Arbeit erfolgen 2050 überwiegend über das Netz.",Fraunhofer ISIT,,2014,
+"Ob in der Wohnung, am Arbeitsplatz oder unterwegs, der Mensch ist 2050 permanent mit dem Internet verbunden.",Fraunhofer ISIT,,2014,
+"Einst lebten wir auf dem Land, dann in Städten und von jetzt an im Netz.",Mark Zuckerberg,Gründer von Facebook,2010,
+Bald kommt die Technik ohne uns aus.,Manfred Hinrich,Philosoph,,
+"Der technische Fortschritt bietet uns die Möglichkeit, den Lebensstandard jedes Menschen auf der Erde deutlich zu verbessern.",Peter H. Diamandis und Steven Kotler,Forscher und Autoren,2013,
+"Ich fürchte, dass ich zur letzten Generation gehöre, die noch sterben muss.",Gerald Sussman,Informatiker,2013,
+"Wer sagt, dass wir nicht tausend Jahre leben können, dass Autos nicht fliegen können?",Sebastian Thrun,Gründer des Google X Labors,2014,
+"Der technologische Wandel wird so schnell sein, dass das menschliche Leben unwiderrufbar verwandelt wird.",Ray Kurzweil,Director of Engineering bei Google,2005,aus »Menschheit 2.0«
+Sex und Liebe mit Robotern sind unvermeidlich.,David Levy,Schachmeister und Computer-Experte,2007,
+"Der Computer der Zukunft ist eine elektronische Wolke, die ihren Besitzer umgibt.",Konrad Lischka,Journalist,2001,aus »De:Bug 45«
+"In zehn Jahren dürfte die reguläre Rentnerwohnung mit einem Hybrid-Roboter ausgestattet sein, der soziale und medizinische Funktionen in sich vereint.",Anton Waldt,Journalist,2002,aus »De:Bug 55«
+"Die Kommunikation wird sich durch die Smartwatch stark verändern, sie wird emotionaler und schneller.",Lasse Lüders,"Geschäftsführer von Appmotion, Hamburg",2015,
+The processing capacity of chips doubles every 18 months with no change in costs.,Moore´s law,,1965,
+The amount of information people share on the internet doubles every 12 months.,Mark Zuckerberg,Gründer von Facebook,2008,
+"Internet? Das hatten wir auch mal, aber es hat uns nicht gefallen.",Tommy Jaud,Autor,2010,aus dem Buch »Hummeldumm«
+We must put a million people on Mars if we are to ensure that humanity has a future.,Elon Musk,Unternehmer,2014,
+"If you look at our current technology level, something strange has to happen to civilisations, and I mean strange in a bad way.",Elon Musk,Unternehmer,2014,
+Ethics change with technology.,Larry Niven,science fiction author,2002,
+"The real danger is not that computers will begin to think like men, but that men will begin to think like computers.",Sydney J. Harris,Journalist,,
+"In the future, human-driven cars may be illegal.",Elon Musk,Unternehmer,2015,

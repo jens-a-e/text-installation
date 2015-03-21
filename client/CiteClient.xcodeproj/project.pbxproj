@@ -16,6 +16,7 @@
 		B410C26A1ABC1D9B00D29C06 /* ofAppDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B410C2691ABC1D9B00D29C06 /* ofAppDB.cpp */; };
 		B410C26C1ABC1E1600D29C06 /* ofAppEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B410C26B1ABC1E1600D29C06 /* ofAppEvents.cpp */; };
 		B410C27C1ABC597C00D29C06 /* ofAppNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B410C27B1ABC597C00D29C06 /* ofAppNetwork.cpp */; };
+		B410C27D1ABC7BD800D29C06 /* ofxUDPManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B410C2791ABC590500D29C06 /* ofxUDPManager.cpp */; };
 		B4CF47041ABAA5F6000D7B25 /* Citation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4CF47021ABAA5F6000D7B25 /* Citation.cpp */; };
 		B4CF47131ABAF79F000D7B25 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4CF47121ABAF79F000D7B25 /* ofApp.cpp */; };
 		B4EC41D11AA5C001002A230B /* ofxCsv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4EC41281AA5BFE0002A230B /* ofxCsv.cpp */; };
@@ -160,6 +161,7 @@
 		B410C2791ABC590500D29C06 /* ofxUDPManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUDPManager.cpp; sourceTree = "<group>"; };
 		B410C27A1ABC590500D29C06 /* ofxUDPManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxUDPManager.h; sourceTree = "<group>"; };
 		B410C27B1ABC597C00D29C06 /* ofAppNetwork.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofAppNetwork.cpp; sourceTree = "<group>"; };
+		B410C27E1ABC8A6600D29C06 /* settings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = settings.xml; path = bin/data/settings.xml; sourceTree = "<group>"; };
 		B4CF47021ABAA5F6000D7B25 /* Citation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Citation.cpp; sourceTree = "<group>"; };
 		B4CF47031ABAA5F6000D7B25 /* Citation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Citation.h; sourceTree = "<group>"; };
 		B4CF47121ABAF79F000D7B25 /* ofApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofApp.cpp; sourceTree = "<group>"; };
@@ -679,6 +681,7 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
+				B410C27E1ABC8A6600D29C06 /* settings.xml */,
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
@@ -819,6 +822,7 @@
 				B4EC41F41AA5D8A8002A230B /* tinyxml.cpp in Sources */,
 				B4EC41F71AA5D8A8002A230B /* ofxXmlSettings.cpp in Sources */,
 				B410C26C1ABC1E1600D29C06 /* ofAppEvents.cpp in Sources */,
+				B410C27D1ABC7BD800D29C06 /* ofxUDPManager.cpp in Sources */,
 				B410C26A1ABC1D9B00D29C06 /* ofAppDB.cpp in Sources */,
 				B4CF47131ABAF79F000D7B25 /* ofApp.cpp in Sources */,
 				B410C2631ABC054B00D29C06 /* DirectoryUtils.cpp in Sources */,

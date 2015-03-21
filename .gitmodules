@@ -3,7 +3,7 @@
 	url=https://github.com/jens-a-e/ofxCsv.git
 [submodule "client/addons/ofxTrueTypeFontUL2"]
 	path = client/addons/ofxTrueTypeFontUL2
-	url = https://github.com/kentaroid/ofxTrueTypeFontUL2.git
+	url = https://github.com/jens-a-e/ofxTrueTypeFontUL2
 [submodule "client/addons/ofxSimpleTimer"]
 	path = client/addons/ofxSimpleTimer
 	url = https://github.com/HeliosInteractive/ofxSimpleTimer.git

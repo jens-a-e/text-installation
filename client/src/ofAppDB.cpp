@@ -22,20 +22,23 @@ void ofApp::buildCitationRun(){
     return;
   }
   
-std:vector<int> ids;
+  std:vector<int> ids;
+  
   // substract header row from numRows!
   for (int r=0; r < db.numRows-1; r++) {
     ids.push_back(r);
   }
   
-  int last_id = currentCitation == NULL ? -1 : currentCitation->id;
+  ofRandomize(ids);
   
-  if (last_id >= 0) {
+  string last = currentCitation == NULL ? "" : currentCitation->body;
+  
+  if (last != "") {
     Citation *testCite;
     do {
       ofRandomize(ids);
       testCite = Citation::fromCSVRow(db, ids.at(0));
-    } while(testCite->id != last_id );
+    } while(testCite->body != last );
     delete testCite;
   }
   
@@ -61,6 +64,7 @@ void ofApp::nextCitation(){
   currentCitation = Citation::fromCSVRow(db, next);
   
   ofLog() << currentCitation->toString();
+  broadCastClients("Citing:"+ofToString(currentCitation->id));
   
   citationIDs->pop();
 }
