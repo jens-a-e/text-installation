@@ -18,6 +18,7 @@ void ofApp::setup(){
     ofSetLogLevel(OF_LOG_ERROR);
   }
   
+  ofSetFrameRate(60);
   ofSetVerticalSync(true);
   ofBackground(51, 99, 59);
 
@@ -106,7 +107,7 @@ void ofApp::draw(){
         meta += (meta.length() == 0 ? "" : "\n") + currentCitation->reason;
       }
       
-      citeMetaFace.drawString(meta, 50, ofGetHeight()- 4*34 , ofGetWidth()-100, 3*34, UL2_TEXT_ALIGN_V_TOP|UL2_TEXT_ALIGN_RIGHT);
+      citeMetaFace.drawString(meta, 50, ofGetHeight()- 4*34 + 5 , ofGetWidth()-105, 3*34, UL2_TEXT_ALIGN_V_TOP|UL2_TEXT_ALIGN_RIGHT);
     }
   } else {
     if (bDebug) {
