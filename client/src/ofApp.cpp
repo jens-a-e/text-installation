@@ -74,7 +74,7 @@ void ofApp::draw(){
     
     if (type.bIsRunning || waitForMeta.bIsRunning || showMeta.bIsRunning || waitRewind.bIsRunning || rewind.bIsRunning) {
 
-      if (currentCitation->affiliation == "comment") {
+      if (currentCitation->reason == "comment") {
         ofBackground(33, 102, 137);
       }
       
@@ -82,7 +82,7 @@ void ofApp::draw(){
         mainFaceLarge.drawString(cite_partial, 50, Settings.getValue("settings:fonts:main-large:line-height", 100), ofGetWidth()-100, 500, align);
 //        mainFaceLarge.drawStringAsShapes(cite_partial, 50, Settings.getValue("settings:fonts:main-large:line-height", 100), ofGetWidth()-100, 500, align);
       } else {
-        mainFace.drawString(cite_partial, 50, Settings.getValue("settings:fonts:main:line-height", 100), ofGetWidth()-100, 500, align);
+        mainFace.drawString(cite_partial, 50, Settings.getValue("settings:fonts:main:line-height", 100) + 10, ofGetWidth()-100, 500, align);
 //        mainFace.drawStringAsShapes(cite_partial, 50, Settings.getValue("settings:fonts:main:line-height", 100), ofGetWidth()-100, 500, align);
       }
       
@@ -96,7 +96,7 @@ void ofApp::draw(){
       // reason
       string meta = "";
       
-      if (currentCitation->affiliation.length() > 0 && currentCitation->affiliation != "comment") {
+      if (currentCitation->affiliation.length() > 0) {
         meta += currentCitation->affiliation;
       }
       
@@ -104,7 +104,7 @@ void ofApp::draw(){
         meta += (meta.length() == 0 ? "" : ", ") + currentCitation->year;
       }
       
-      if (currentCitation->reason.length() > 0) {
+      if (currentCitation->reason.length() > 0 && currentCitation->reason != "comment") {
         meta += (meta.length() == 0 ? "" : "\n") + currentCitation->reason;
       }
       
