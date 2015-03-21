@@ -66,14 +66,14 @@ void ofApp::draw(){
 
   if (currentCitation != NULL) {
     
-    if (currentCitation->affiliation == "comment" && idle.bIsPaused) {
-      ofBackground(33, 102, 137);
-    }
-    
     ofSetColor(225);
     
     
     if (type.bIsRunning || waitForMeta.bIsRunning || showMeta.bIsRunning || waitRewind.bIsRunning || rewind.bIsRunning) {
+
+      if (currentCitation->affiliation == "comment") {
+        ofBackground(33, 102, 137);
+      }
       
       if(currentCitation->body.size() <= Settings.getValue("settings:use-large-from", -1)) {
         mainFaceLarge.drawString(cite_partial, 50, Settings.getValue("settings:fonts:main-large:line-height", 100), ofGetWidth()-100, 500, align);
