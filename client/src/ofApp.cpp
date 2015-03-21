@@ -63,6 +63,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+  ofHideCursor();
   
   ofBackground(51, 99, 59);
 
