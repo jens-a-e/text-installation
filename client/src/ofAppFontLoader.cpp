@@ -21,6 +21,7 @@ void ofApp::loadFonts() {
   mainFace.setWordWrap(true);
   mainFace.setAlignByPixel(bAlignByPixel);
   mainFace.setUseLayoutCache(true);
+  mainFace.setGlobalDpi(72);
   
   mainFace.loadFont(heavyFont, Settings.getValue("settings:fonts:main:size", 68), true, true);
   
@@ -31,6 +32,7 @@ void ofApp::loadFonts() {
   mainFaceLarge.setWordWrap(true);
   mainFaceLarge.setAlignByPixel(bAlignByPixel);
   mainFaceLarge.setUseLayoutCache(true);
+  mainFaceLarge.setGlobalDpi(72);
   
   mainFaceLarge.loadFont(heavyFont, Settings.getValue("settings:fonts:main-large:size", 68), true, true);
   
@@ -38,6 +40,7 @@ void ofApp::loadFonts() {
   citeNameFace.setLineHeight(44);
   citeNameFace.setWordWrap(false);
   citeNameFace.setUseLayoutCache(true);
+  citeNameFace.setGlobalDpi(72);
 
   citeNameFace.loadFont(heavyObliqueFont, 34);
   
@@ -45,6 +48,7 @@ void ofApp::loadFonts() {
   citeMetaFace.setLineHeight(44);
   citeMetaFace.setWordWrap(false);
   citeMetaFace.setUseLayoutCache(true);
+  citeMetaFace.setGlobalDpi(72);
 
   citeMetaFace.loadFont(bookObliqueFont, 34);
   
