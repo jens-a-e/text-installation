@@ -62,6 +62,7 @@ public:
   // We want to use Unicode features to be safe and
   // get better text layout with harfbuzz
   ofxTrueTypeFontUL2 mainFace, mainFaceLarge, citeNameFace, citeMetaFace;
+  void loadFonts();
 
   string cite_partial;
 
