@@ -8,11 +8,15 @@
 
 #include "ofApp.h"
 
-
+static bool doReload = false;
 //--------------------------------------------------------------
 void ofApp::loadDB(){
   db.loadFile(dbPath);
   buildCitationRun();
+}
+
+void ofApp::scheduleReload() {
+  doReload = true;
 }
 
 void ofApp::buildCitationRun(){
@@ -50,11 +54,17 @@ void ofApp::buildCitationRun(){
 }
 
 void ofApp::nextCitation(){
+  if (doReload) {
+    db.loadFile(dbPath);
+    doReload = false;
+  }
+  
   if (citationIDs == NULL || citationIDs->size() == 0) {
     buildCitationRun();
   }
   
   int next = currentCitationID();
+  
   if (next < 0) return;
   
   if(currentCitation != NULL) {

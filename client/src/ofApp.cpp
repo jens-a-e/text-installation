@@ -61,11 +61,17 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+  
   ofBackground(51, 99, 59);
-  ofSetColor(225);
-  
-  
+
   if (currentCitation != NULL) {
+    
+    if (currentCitation->affiliation == "comment" && idle.bIsPaused) {
+      ofBackground(33, 102, 137);
+    }
+    
+    ofSetColor(225);
+    
     
     if (type.bIsRunning || waitForMeta.bIsRunning || showMeta.bIsRunning || waitRewind.bIsRunning || rewind.bIsRunning) {
       
@@ -87,7 +93,7 @@ void ofApp::draw(){
       // reason
       string meta = "";
       
-      if (currentCitation->affiliation.length() > 0) {
+      if (currentCitation->affiliation.length() > 0 && currentCitation->affiliation != "comment") {
         meta += currentCitation->affiliation;
       }
       
