@@ -110,5 +110,6 @@ public:
   int currentCitationID();
   void buildCitationRun();
   void nextCitation();
+  void scheduleReload();
   
 };

@@ -61,13 +61,19 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+  
   ofBackground(51, 99, 59);
-  ofSetColor(225);
-  
-  
+
   if (currentCitation != NULL) {
     
+    ofSetColor(225);
+    
+    
     if (type.bIsRunning || waitForMeta.bIsRunning || showMeta.bIsRunning || waitRewind.bIsRunning || rewind.bIsRunning) {
+
+      if (currentCitation->affiliation == "comment") {
+        ofBackground(33, 102, 137);
+      }
       
       if(currentCitation->body.size() <= Settings.getValue("settings:use-large-from", -1)) {
         mainFaceLarge.drawString(cite_partial, 50, Settings.getValue("settings:fonts:main-large:line-height", 100), ofGetWidth()-100, 500, align);
@@ -87,7 +93,7 @@ void ofApp::draw(){
       // reason
       string meta = "";
       
-      if (currentCitation->affiliation.length() > 0) {
+      if (currentCitation->affiliation.length() > 0 && currentCitation->affiliation != "comment") {
         meta += currentCitation->affiliation;
       }
       

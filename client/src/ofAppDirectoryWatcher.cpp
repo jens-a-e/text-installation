@@ -23,8 +23,7 @@ void ofApp::onDirectoryWatcherItemModified(const DirectoryWatcherManager::Direct
   string filename = evt.item.path();
   if (filename == dbPath) {
     // DB has been modified
-    loadDB();
-    
+    // scheduleReload();
   }
 }
 
