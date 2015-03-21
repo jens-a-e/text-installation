@@ -1,12 +1,28 @@
 #include "ofApp.h"
 
+bool ofApp::bAlignByPixel = false;
+
 //--------------------------------------------------------------
 void ofApp::setup(){
 //  ofSetLogLevel(OF_LOG_ERROR);
   
+  Settings.load(ofToDataPath("settings.xml",true));
+  
+  bDebug = Settings.getValue("settings:debug", 0) > 0;
+  
+  ofSetFullscreen(Settings.getValue("settings:fullscreen", 1) > 0);
+  
+  if (bDebug) {
+    ofSetLogLevel(OF_LOG_VERBOSE);
+  } else {
+    ofSetLogLevel(OF_LOG_ERROR);
+  }
+  
   ofSetVerticalSync(true);
   ofBackground(51, 99, 59);
 
+  citeAmount = 0;
+  
   // db settings, non-settable
   dbPath = ofToDataPath("zitate.csv", true);
   
@@ -21,28 +37,8 @@ void ofApp::setup(){
   
   watcher.addPath(folderToWatch, listExistingItemsOnStart, &fileFilter);
   
-  
-  string bookObliqueFont  = ofToDataPath("FuturaStd-BookOblique.otf");
-  string heavyFont        = ofToDataPath("FuturaStd-Heavy.otf");
-  string heavyObliqueFont = ofToDataPath("FuturaStd-HeavyOblique.otf");
-
-  mainFace.setLetterSpacing(0.1);
-  mainFace.setLineHeight(100);
-  mainFace.setSpaceSize(1);
-  mainFace.setGlobalDpi(72);
-  mainFace.setAlignByPixel(true);
-  mainFace.setWordWrap(true);
-  mainFace.useProportional(true);
-  mainFace.setTextDirection(UL2_TEXT_DIRECTION_LTR);
-  mainFace.loadFont(heavyFont, 68);
-  
-  citeNameFace.setLineHeight(44);
-  citeNameFace.setWordWrap(true);
-  citeNameFace.loadFont(heavyObliqueFont, 34);
-
-  citeMetaFace.setLineHeight(44);
-  citeMetaFace.setWordWrap(true);
-  citeMetaFace.loadFont(bookObliqueFont, 34);
+  // Prepare fonts
+  loadFonts();
   
   // Prepare citations
   
@@ -68,9 +64,19 @@ void ofApp::draw(){
   ofBackground(51, 99, 59);
   ofSetColor(225);
   
+  
   if (currentCitation != NULL) {
+    
     if (type.bIsRunning || waitForMeta.bIsRunning || showMeta.bIsRunning || waitRewind.bIsRunning || rewind.bIsRunning) {
-      mainFace.drawString(cite_partial, 50, 100, ofGetWidth()-100, 500, align);
+      
+      if(currentCitation->body.size() <= Settings.getValue("settings:use-large-from", -1)) {
+        mainFaceLarge.drawString(cite_partial, 50, Settings.getValue("settings:fonts:main-large:line-height", 100), ofGetWidth()-100, 500, align);
+//        mainFaceLarge.drawStringAsShapes(cite_partial, 50, Settings.getValue("settings:fonts:main-large:line-height", 100), ofGetWidth()-100, 500, align);
+      } else {
+        mainFace.drawString(cite_partial, 50, Settings.getValue("settings:fonts:main:line-height", 100), ofGetWidth()-100, 500, align);
+//        mainFace.drawStringAsShapes(cite_partial, 50, Settings.getValue("settings:fonts:main:line-height", 100), ofGetWidth()-100, 500, align);
+      }
+      
     }
     
     if (showMeta.bIsRunning) {
@@ -103,6 +109,11 @@ void ofApp::draw(){
   }
   
   showTimersDebug();
+  
+  if (bDebug) {
+    ofDrawBitmapString(ofToString(ofGetFrameRate(),2), ofGetWidth() - 50, 25);
+    ofDrawBitmapString(bAlignByPixel ? "Aligned by pixel" : "Not aligned by pixel", ofGetWidth() - 200, 40);
+  }
   
 }
 
