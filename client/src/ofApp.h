@@ -68,7 +68,7 @@ public:
 
   Citation *currentCitation;
   
-  bool bitmapRendering = true;
+  bool bitmapRendering;
   int align;
 
   ofxSimpleTimer idle, type, waitForMeta, showMeta, waitRewind, rewind;

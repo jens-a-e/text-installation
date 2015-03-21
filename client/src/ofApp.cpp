@@ -22,6 +22,7 @@ void ofApp::setup(){
   ofBackground(51, 99, 59);
 
   citeAmount = 0;
+  bitmapRendering = true;
   
   // db settings, non-settable
   dbPath = ofToDataPath("zitate.csv", true);
