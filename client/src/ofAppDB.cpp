@@ -71,12 +71,21 @@ void ofApp::nextCitation(){
     delete currentCitation;
   }
   
-  currentCitation = Citation::fromCSVRow(db, next);
+  if (mustBeComment) {
+    mustBeComment = false;
+    currentCitation = Citation::fromCSVRow(db, db.numRows-2);
+  } else {
+    currentCitation = Citation::fromCSVRow(db, next);
+    citationIDs->pop();
+  }
   
   ofLog() << currentCitation->toString();
   broadCastClients("Citing:"+ofToString(currentCitation->id));
   
-  citationIDs->pop();
+}
+
+void ofApp::scheduleUserComment() {
+  mustBeComment = true;
 }
 
 int ofApp::currentCitationID() {

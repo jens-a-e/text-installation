@@ -9,21 +9,29 @@ void ofApp::setup(){
   Settings.load(ofToDataPath("settings.xml",true));
   
   bDebug = Settings.getValue("settings:debug", 0) > 0;
-  
-  ofSetFullscreen(Settings.getValue("settings:fullscreen", 1) > 0);
-  
-  setupMasterConnection();
-  setupClientNetwork();
-  
   if (bDebug) {
     ofSetLogLevel(OF_LOG_VERBOSE);
   } else {
     ofSetLogLevel(OF_LOG_ERROR);
   }
   
+  ofSetFullscreen(Settings.getValue("settings:fullscreen", 1) > 0);
+  
+  mustBeComment = false;
+  
+  bgColor = ofColor(51, 99, 59);
+  bgSat = bgColor.getSaturation();
+  bgHue = bgColor.getHue();
+  bgBright = bgColor.getBrightness();
+  
+  setupMasterConnection();
+  setupClientNetwork();
+  
+  scheduleDownload();
+  
   ofSetFrameRate(60);
   ofSetVerticalSync(true);
-  ofBackground(51, 99, 59);
+  ofBackground(bgColor);
 
   citeAmount = 0;
   bitmapRendering = true;
@@ -70,7 +78,7 @@ void ofApp::update(){
 void ofApp::draw(){
   ofHideCursor();
   
-  ofBackground(51, 99, 59);
+  ofBackground(bgColor);
 
   if (currentCitation != NULL) {
     

@@ -102,6 +102,9 @@ public:
   string dbPath;
   void loadDB();
   
+  ofColor bgColor;
+  float bgSat,bgHue,bgBright;
+  
   int lastCitationID;
   std::stack<int,std::vector<int> > * citationIDs;
   
@@ -111,5 +114,8 @@ public:
   void buildCitationRun();
   void nextCitation();
   void scheduleReload();
+  void scheduleUserComment();
+  void scheduleDownload();
+  bool mustBeComment;
   
 };

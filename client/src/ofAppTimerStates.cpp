@@ -21,7 +21,7 @@ void ofApp::setupTimers(){
   ofAddListener( waitForMeta.TIMER_STARTED  , this, &ofApp::waitForMetaTimerStartHandler ) ;
   ofAddListener( waitForMeta.TIMER_COMPLETE , this, &ofApp::waitForMetaTimerCompleteHandler ) ;
   
-  showMeta.setup(7000); // this is the full cite show time! +1000 from before
+  showMeta.setup(Settings.getValue("settings:showtime", 7000)); // this is the full cite show time! +1000 from before
   ofAddListener( showMeta.TIMER_STARTED  , this, &ofApp::showMetaTimerStartHandler ) ;
   ofAddListener( showMeta.TIMER_COMPLETE , this, &ofApp::showMetaTimerCompleteHandler ) ;
   
@@ -68,6 +68,15 @@ void ofApp::idleTimerStartHandler(int &args) {
 
 void ofApp::idleTimerCompleteHandler(int &args) {
   ofLog(OF_LOG_NOTICE,"Idle Timer Complete!");
+  
+  // set new randmozed bg color // shift by 10%, random
+  float h,s,b;
+  h = bgHue + bgHue*ofRandom(-0.1, 0.1);
+  s = bgSat + bgSat*ofRandom(-0.1, 0.1);
+  b = bgBright + bgBright*ofRandom(-0.1, 0.1);
+  
+  bgColor.setHsb(h,s,b);
+  
   cite_partial = "";
   nextCitation();
   citeAmount = 0;

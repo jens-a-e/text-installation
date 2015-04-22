@@ -55,7 +55,23 @@ void ofApp::masterConnectionUpdate() {
     ofLog() << "Master Network send: " << message;
     if (message == "update") {
       // load new db file
-      
+      scheduleDownload();
     }
+    else if (message == "showUserComment") {
+      scheduleUserComment();
+    }
+  }
+}
+
+void ofApp::scheduleDownload() {
+  ofHttpResponse resp = ofSaveURLTo("http://master.text:4200/zitate.csv", ofToDataPath("downloaded-db.csv"));
+  
+  if (resp.status != 200) {
+    ofLog() << "Error updating DB " << resp.error;
+  } else {
+    ofLog() << "Updated DB" << resp.error;
+    ofFile::copyFromTo("zitate.csv", "zitate.csv.bak", true, false);
+    ofFile::copyFromTo("downloaded-db.csv", "zitate.csv", true, true);
+    scheduleReload();
   }
 }

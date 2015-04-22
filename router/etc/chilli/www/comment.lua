@@ -112,6 +112,32 @@ f:write(entry)
 f:close()
 
 -- notify clients to get new DB
+require 'socket'
+host = "192.168.123.255"
+port = 3332
+udp, err = socket.udp()
+if not udp then print(err) os.exit() end
+udp:setoption('broadcast', true)
+os.execute("logger -t \"kommentar.network\" 'Sending update beacon to clients'\n")
+udp:sendto("update", host, port)
+
+-- pick one client to show the current comment next
+local clients = {
+  "192.168.123.225",
+  "192.168.123.162",
+  "192.168.123.155",
+  "192.168.123.146",
+  "192.168.123.210",
+  "192.168.123.193",
+}
+
+local clientID = math.floor(math.random() * 5.9)
+udp:sendto("showUserComment", clients[clientID], port)
+-- also send to jens' machine for debugging
+udp:sendto("showUserComment", "192.168.123.207", port)
+
+
+
 
 
 -- respond back with the current comment

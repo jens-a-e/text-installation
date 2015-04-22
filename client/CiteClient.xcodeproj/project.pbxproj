@@ -701,8 +701,8 @@
 			children = (
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
-				B410C27B1ABC597C00D29C06 /* ofAppNetwork.cpp */,
 				B4CF47121ABAF79F000D7B25 /* ofApp.cpp */,
+				B410C27B1ABC597C00D29C06 /* ofAppNetwork.cpp */,
 				B410C2801ABD92D000D29C06 /* ofAppFontLoader.cpp */,
 				B410C26B1ABC1E1600D29C06 /* ofAppEvents.cpp */,
 				B410C2651ABC183700D29C06 /* ofAppDirectoryWatcher.cpp */,

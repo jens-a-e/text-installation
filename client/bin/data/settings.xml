@@ -14,4 +14,5 @@
   <use-large-from>60</use-large-from>
   <debug>0</debug>
   <fullscreen>0</fullscreen>
+  <showtime>7000</showtime>
 </settings>
