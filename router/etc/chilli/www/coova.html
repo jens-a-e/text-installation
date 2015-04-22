@@ -22,28 +22,34 @@
     $(function(){
       setTimeout($('.name').focus, 1000);
 
-      $('.comment').on('keydown', function(event){
+      $('.name').on('keyup', function(event){
         var chars = $(this).val().length;
-        if (chars >= 140 || event.keyCode === 13) {
-          event.preventDefault();
-          return false;
-        }
-      }).trigger('keydown');
-
-      $('.comment').on('keyup', function(event){
-        var chars = $(this).val().length;
-        $('.help').text(chars + " von 140");
-        if (chars >= 140 || event.keyCode === 13) {
+        if (chars >= 25 || event.keyCode == 13) {
           event.preventDefault();
           return false;
         }
       }).on('keydown', function(event) {
         var chars = $(this).val().length;
-        if (event.keyCode !== 8 && chars >= 25 ) {
+        if (event.keyCode == 13 || (event.keyCode !== 8 && chars >= 25 )) {
           event.preventDefault();
           return false;
         }
-      }).trigger('keyup');
+      }).trigger('keydown').trigger('keyup');
+
+      $('.comment').on('keyup', function(event){
+        var chars = $(this).val().length;
+        $('.help').text(chars + " von 140");
+        if (chars >= 140 || event.keyCode == 13) {
+          event.preventDefault();
+          return false;
+        }
+      }).on('keydown', function(event) {
+        var chars = $(this).val().length;
+        if (event.keyCode === 13 || (event.keyCode !== 8 && chars >= 140 )) {
+          event.preventDefault();
+          return false;
+        }
+      }).trigger('keydown').trigger('keyup');
 
       var log = function(text) {
         $('.debug code').append("\n["+Date.now()+"]: "+text+"\n");
