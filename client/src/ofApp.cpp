@@ -12,6 +12,9 @@ void ofApp::setup(){
   
   ofSetFullscreen(Settings.getValue("settings:fullscreen", 1) > 0);
   
+  setupMasterConnection();
+  setupClientNetwork();
+  
   if (bDebug) {
     ofSetLogLevel(OF_LOG_VERBOSE);
   } else {
@@ -58,6 +61,8 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+  masterConnectionUpdate();
+  clientNetworkUpdate();
   updateAllTimers();
 }
 

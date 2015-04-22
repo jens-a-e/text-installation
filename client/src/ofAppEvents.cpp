@@ -111,6 +111,11 @@ void ofApp::keyPressed(int key){
       break;
     case '.':
       bDebug = !bDebug;
+      if (bDebug) {
+        ofSetLogLevel(OF_LOG_VERBOSE);
+      } else {
+        ofSetLogLevel(OF_LOG_ERROR);
+      }
       break;
       
   }

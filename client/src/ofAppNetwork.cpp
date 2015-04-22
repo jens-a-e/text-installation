@@ -15,11 +15,11 @@ void ofApp::setupNetwork() {
 }
 
 void ofApp::setupClientNetwork() {
+  clientNet.Create();
   clientNet.SetEnableBroadcast(true);
   clientNet.SetNonBlocking(true);
   clientNet.SetReuseAddress(true);
   clientNet.Bind(3331);
-  clientNet.Create();
 }
 
 void ofApp::broadCastClients(string msg) {
@@ -41,13 +41,21 @@ void ofApp::clientNetworkUpdate() {
 }
 
 void ofApp::setupMasterConnection() {
-  masterConnection.SetEnableBroadcast(true);
-  masterConnection.SetNonBlocking(true);
-  clientNet.SetReuseAddress(true);
-  masterConnection.Bind(3332);
   masterConnection.Create();
+//  masterConnection.SetEnableBroadcast(true);
+  masterConnection.SetNonBlocking(true);
+  masterConnection.Bind(3332);
 }
 
 void ofApp::masterConnectionUpdate() {
-  
+  char udpMessage[1000];
+  masterConnection.Receive(udpMessage,1000);
+  string message=udpMessage;
+  if (message != "") {
+    ofLog() << "Master Network send: " << message;
+    if (message == "update") {
+      // load new db file
+      
+    }
+  }
 }

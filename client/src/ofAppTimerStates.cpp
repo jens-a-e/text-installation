@@ -21,7 +21,7 @@ void ofApp::setupTimers(){
   ofAddListener( waitForMeta.TIMER_STARTED  , this, &ofApp::waitForMetaTimerStartHandler ) ;
   ofAddListener( waitForMeta.TIMER_COMPLETE , this, &ofApp::waitForMetaTimerCompleteHandler ) ;
   
-  showMeta.setup(3000);
+  showMeta.setup(7000); // this is the full cite show time! +1000 from before
   ofAddListener( showMeta.TIMER_STARTED  , this, &ofApp::showMetaTimerStartHandler ) ;
   ofAddListener( showMeta.TIMER_COMPLETE , this, &ofApp::showMetaTimerCompleteHandler ) ;
   
