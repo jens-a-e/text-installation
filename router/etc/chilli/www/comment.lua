@@ -41,6 +41,11 @@ end
 -- Decode the JSON from the found query
 local input = JSON:decode(query)
 
+-- Fix anonymous visitor
+if input.name == nil or string.len(input.name) == 0 then
+  input.name = "Ein Besucher"
+end
+
 data["comment"] = input
 
 -- add the comment to the DB
@@ -51,7 +56,7 @@ data["comment"] = input
 -- respond back with the current comment
 local body = JSON:encode_pretty(data)
 
-os.execute("logger -t \"kommentar.body\" '" .. body .. "'\n")
+os.execute("logger -t \"kommentar.user.comment\" '" .. body .. "'\n")
 
 
 -- Respond with OK and curretn comment
