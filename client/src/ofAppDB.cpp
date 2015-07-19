@@ -11,6 +11,7 @@
 static bool doReload = false;
 //--------------------------------------------------------------
 void ofApp::loadDB(){
+  doReload = false;
   db.loadFile(dbPath);
   buildCitationRun();
 }
