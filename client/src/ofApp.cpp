@@ -4,8 +4,6 @@ bool ofApp::bAlignByPixel = false;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-//  ofSetLogLevel(OF_LOG_ERROR);
-  
   Settings.load(ofToDataPath("settings.xml",true));
   
   bDebug = Settings.getValue("settings:debug", 0) > 0;
@@ -98,11 +96,9 @@ void ofApp::draw(){
       }
       
       if(currentCitation->body.size() <= Settings.getValue("settings:use-large-from", -1)) {
-        mainFaceLarge.drawString(cite_partial, 50, Settings.getValue("settings:fonts:main-large:line-height", 100), ofGetWidth()-100, 500, align);
-//        mainFaceLarge.drawStringAsShapes(cite_partial, 50, Settings.getValue("settings:fonts:main-large:line-height", 100), ofGetWidth()-100, 500, align);
+        mainFaceLarge.drawString(currentCitation->body, 50, Settings.getValue("settings:fonts:main-large:line-height", 100), ofGetWidth()-100, 500, align, citeAmount);
       } else {
-        mainFace.drawString(cite_partial, 50, Settings.getValue("settings:fonts:main:line-height", 100) + 10, ofGetWidth()-100, 500, align);
-//        mainFace.drawStringAsShapes(cite_partial, 50, Settings.getValue("settings:fonts:main:line-height", 100), ofGetWidth()-100, 500, align);
+        mainFace.drawString(currentCitation->body, 50, Settings.getValue("settings:fonts:main:line-height", 100) + 10, ofGetWidth()-100, 500, align, citeAmount);
       }
       
     }

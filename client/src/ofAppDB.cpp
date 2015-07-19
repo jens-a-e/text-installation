@@ -54,7 +54,28 @@ void ofApp::buildCitationRun(){
   citationIDs = new std::stack<int,std::vector<int> >(ids);
 }
 
+const bool useServer = false;
+
 void ofApp::nextCitation(){
+  if (useServer) {
+    // try server
+    ofHttpResponse nextCite = ofLoadURL("http://master.text:4200/cgi-bin/test.lua");
+    if(  nextCite.status != 200 || nextCite.data.size() == 0) {
+      ofLog(OF_LOG_ERROR, "Incorrect response from server, using fallback citing.");
+      goto fallback;
+    }
+    
+    ofLog(OF_LOG_ERROR, nextCite.data.getText());
+    currentCitation = Citation::fromString(nextCite.data.getText());
+    if (currentCitation == NULL) {
+      ofLog(OF_LOG_ERROR, "Could not parse as citation: \n"+nextCite.data.getText());
+      goto fallback;
+    }
+    return;
+  }
+  
+  // fallback to local random
+fallback:
   if (doReload) {
     db.loadFile(dbPath);
     doReload = false;
