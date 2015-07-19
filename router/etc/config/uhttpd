@@ -43,5 +43,5 @@ config uhttpd 'textinstalltiondb'
 	option http_keepalive '20'
 	option tcp_keepalive '1'
 	option cgi_prefix '/cgi-bin'
-	option interpreter '.lua=/bin/lua'
+	option interpreter '.lua=/usr/bin/lua'
 
