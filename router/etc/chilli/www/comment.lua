@@ -146,7 +146,7 @@ local body = JSON:encode_pretty(data)
 os.execute("logger -t \"kommentar.user.comment\" '" .. body .. "'\n")
 
 
--- Respond with OK and curretn comment
+-- Respond with OK and current comment
 local header = [[HTTP/1.0 200 OK
 Content-Type: application/json
 Cache: none
