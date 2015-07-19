@@ -66,16 +66,19 @@ void ofApp::idleTimerStartHandler(int &args) {
   ofLog(OF_LOG_NOTICE,"Idle Timer Started!");
 }
 
+void ofApp::newBackground(){
+  // set new randmozed bg color // shift by 10%, random
+  float h,s,b;
+  h = bgHue + bgHue*ofRandom(-bgShift, bgShift);
+  s = bgSat + bgSat*ofRandom(-bgShift, bgShift);
+  b = bgBright + bgBright*ofRandom(-bgShift, bgShift);
+  bgColor.setHsb(h,s,b);
+}
+
 void ofApp::idleTimerCompleteHandler(int &args) {
   ofLog(OF_LOG_NOTICE,"Idle Timer Complete!");
   
-  // set new randmozed bg color // shift by 10%, random
-  float h,s,b;
-  h = bgHue + bgHue*ofRandom(-0.1, 0.1);
-  s = bgSat + bgSat*ofRandom(-0.1, 0.1);
-  b = bgBright + bgBright*ofRandom(-0.1, 0.1);
-  
-  bgColor.setHsb(h,s,b);
+  newBackground();
   
   cite_partial = "";
   nextCitation();

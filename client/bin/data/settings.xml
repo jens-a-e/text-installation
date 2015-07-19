@@ -15,4 +15,10 @@
   <debug>0</debug>
   <fullscreen>0</fullscreen>
   <showtime>7000</showtime>
+  <background>
+    <r>51</r>
+    <g>99</g>
+    <b>59</b>
+    <shift>0.2</shift>
+  </background>
 </settings>

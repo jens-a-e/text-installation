@@ -104,6 +104,8 @@ public:
   
   ofColor bgColor;
   float bgSat,bgHue,bgBright;
+  double bgShift;
+  void newBackground();
   
   int lastCitationID;
   std::stack<int,std::vector<int> > * citationIDs;

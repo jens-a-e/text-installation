@@ -19,7 +19,13 @@ void ofApp::setup(){
   
   mustBeComment = false;
   
-  bgColor = ofColor(51, 99, 59);
+  int r,g,b;
+  r = Settings.getValue("background:r", 51);
+  g = Settings.getValue("background:g", 99);
+  b = Settings.getValue("background:b", 59);
+  bgShift = Settings.getValue("background:shift", 0.1);
+  
+  bgColor = ofColor(r,g,b);
   bgSat = bgColor.getSaturation();
   bgHue = bgColor.getHue();
   bgBright = bgColor.getBrightness();
