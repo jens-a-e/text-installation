@@ -25,6 +25,7 @@ public:
   ~Citation();
   
   static Citation * fromCSVRow(ofxCsv csv, int row);
+  static Citation * fromString(string s);
 
   const string toString();
 };
