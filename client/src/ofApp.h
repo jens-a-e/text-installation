@@ -56,6 +56,8 @@ public:
   void clientNetworkUpdate();
   void broadCastClients(string msg);
   
+  
+  
   void setupMasterConnection();
   void masterConnectionUpdate();
   
@@ -108,18 +110,30 @@ public:
   void newBackground();
   
   int lastCitationID;
-  std::stack<int,std::vector<int> > * citationIDs;
+  deque<int> citationIDs;
 
   map<string, int> clientCites;
+  set<int> activeCites;
+  set<int> citedCites;
+  set<int> citedComments;
+  
+  bool inActiveCites(int id);
+  
+  void notifyCiting(int id);
+  void updateActiveCites(int id);
   
   void setupDB();
   
-  int currentCitationID();
   void buildCitationRun();
   void nextCitation();
+  
+  bool popCitation(int id);
+  
   void scheduleReload();
   void scheduleUserComment();
   void scheduleDownload();
   bool mustBeComment;
+  
+  void DumpCitationList();
   
 };

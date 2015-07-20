@@ -55,9 +55,13 @@ void ofApp::clientNetworkUpdate() {
       
       clientCites[remote] = cited;
       
+      popCitation(cited);
+      
       std::cout << remote << " send: " << message << ", the map is now:\n";
       for (std::map<string,int>::iterator it=clientCites.begin(); it!=clientCites.end(); ++it)
         std::cout << it->first << " => " << it->second << '\n';
+      
+      DumpCitationList();
     }
   }
 }

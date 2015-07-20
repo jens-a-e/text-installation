@@ -13,11 +13,21 @@ static bool doReload = false;
 void ofApp::loadDB(){
   doReload = false;
   db.loadFile(dbPath);
+  citationIDs.clear();
   buildCitationRun();
 }
 
 void ofApp::scheduleReload() {
-  doReload = true;
+  loadDB();
+}
+
+void ofApp::DumpCitationList(){
+  ofLog(OF_LOG_VERBOSE) << "---------------" << endl;
+  ofLog(OF_LOG_VERBOSE) << "Current citation ids:" << endl;
+  for (deque<int>::iterator id = citationIDs.begin(); id != citationIDs.end(); ++id) {
+    ofLog(OF_LOG_VERBOSE) << *id;
+  }
+  ofLog(OF_LOG_VERBOSE) << "---------------" << endl;
 }
 
 void ofApp::buildCitationRun(){
@@ -27,90 +37,119 @@ void ofApp::buildCitationRun(){
     return;
   }
   
-  std:vector<int> ids;
+  vector<int> ids;
   
   // substract header row from numRows!
   for (int r=0; r < db.numRows-1; r++) {
     ids.push_back(r);
   }
   
-  ofRandomize(ids);
-  
-  string last = currentCitation == NULL ? "" : currentCitation->body;
-  
-  if (last != "") {
-    Citation *testCite;
+  if (currentCitation == NULL) {
+    ofRandomize(ids);
+  } else {
+    int testId;
     do {
       ofRandomize(ids);
-      testCite = Citation::fromCSVRow(db, ids.at(0));
-    } while(testCite->body != last );
-    delete testCite;
+      testId = ids.at(0);
+    } while(testId != currentCitation->id);
   }
   
-  if (citationIDs != NULL) {
-    delete citationIDs;
+  citationIDs.clear();
+  for(vector<int>::iterator i = ids.begin(); i != ids.end(); ++i) {
+    citationIDs.push_back(*i);
   }
-  
-  citationIDs = new std::stack<int,std::vector<int> >(ids);
+  DumpCitationList();
 }
 
-const bool useServer = false;
-
+//const bool useServer = false;
 void ofApp::nextCitation(){
-  if (useServer) {
-    
-    // try server
-    ofHttpResponse nextCite = ofLoadURL("http://master.text:4200/cgi-bin/test.lua");
-    if(  nextCite.status != 200 || nextCite.data.size() == 0) {
-      ofLog(OF_LOG_ERROR, "Incorrect response from server, using fallback citing.");
-      goto fallback;
-    }
-    
-    ofLog(OF_LOG_ERROR, nextCite.data.getText());
-    currentCitation = Citation::fromString(nextCite.data.getText());
-    if (currentCitation == NULL) {
-      ofLog(OF_LOG_ERROR, "Could not parse as citation: \n"+nextCite.data.getText());
-      goto fallback;
-    }
-    return;
-  }
+//  if (useServer) {
+//    
+//    // try server (this is not working properly on the server side!!)
+//    ofHttpResponse nextCite = ofLoadURL("http://master.text:4200/cgi-bin/test.lua");
+//    if(  nextCite.status != 200 || nextCite.data.size() == 0) {
+//      ofLog(OF_LOG_ERROR, "Incorrect response from server, using fallback citing.");
+//      goto local;
+//    }
+//    
+//    ofLog(OF_LOG_ERROR, nextCite.data.getText());
+//    currentCitation = Citation::fromString(nextCite.data.getText());
+//    if (currentCitation == NULL) {
+//      ofLog(OF_LOG_ERROR, "Could not parse as citation: \n"+nextCite.data.getText());
+//      goto local;
+//    }
+//    return;
+//  }
+//  
+//  // fallback to local random
+//local:
+//  if (doReload) {
+//    db.loadFile(dbPath);
+//    citationIDs.clear();
+//    doReload = false;
+//  }
   
-  // fallback to local random
-fallback:
-  if (doReload) {
-    db.loadFile(dbPath);
-    doReload = false;
-  }
-  
-  if (citationIDs == NULL || citationIDs->size() == 0) {
+  if (citationIDs.empty()) {
     buildCitationRun();
   }
   
-  int next = currentCitationID();
+  DumpCitationList();
   
-  if (next < 0) return;
+  if (citationIDs.empty()) return;
+  
+  int next = citationIDs.front();
+  citationIDs.pop_front();
   
   if(currentCitation != NULL) {
     delete currentCitation;
   }
-  
-  if (mustBeComment) {
-    mustBeComment = false;
-    currentCitation = Citation::fromCSVRow(db, db.numRows-2);
-  } else {
-    currentCitation = Citation::fromCSVRow(db, next);
-    citationIDs->pop();
-  }
+
+  currentCitation = Citation::fromCSVRow(db, next);
   
   ofLog() << currentCitation->toString();
-  broadCastClients("citing:"+ofToString(currentCitation->id));
-  
+  notifyCiting(currentCitation->id);
+}
+
+bool ofApp::popCitation(int id){
+  if (citationIDs.empty()) return true;
+  bool found = false;
+  for(deque<int>::iterator i = citationIDs.begin(); i != citationIDs.end(); ++i) {
+    if (id == *i) {
+      citationIDs.erase(i);
+      found = true;
+      break;
+    }
+  }
+  return found;
+}
+
+void ofApp::notifyCiting(int id) {
+  // update the
+  // updateActiveCites(id);
+  broadCastClients("citing:"+ofToString(id));
+}
+
+void ofApp::updateActiveCites(int id) {
+  if (activeCites.size() >= 10) activeCites.clear();
+  activeCites.insert(id);
+}
+
+bool ofApp::inActiveCites(int id){
+  return activeCites.find(id) != activeCites.end();
 }
 
 void ofApp::scheduleUserComment() {
-  mustBeComment = true;
-}
-
-int ofApp::currentCitationID() {
-  return citationIDs == NULL ? -1 : citationIDs->top();
+  // find the comment with the highest id
+  deque<int>::iterator newestComment = citationIDs.end();
+  for(deque<int>::iterator id = citationIDs.begin(); id != citationIDs.end(); ++id) {
+    Citation* c = Citation::fromCSVRow(db, *id);
+    if(c->reason == "comment" && *newestComment < c->id) {
+      newestComment = id;
+    }
+    delete c;
+  }
+  if (newestComment != citationIDs.end()) {
+    citationIDs.push_front(*newestComment);
+    citationIDs.erase(newestComment);
+  }
 }
