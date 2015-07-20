@@ -15,6 +15,7 @@ void ofApp::setupNetwork() {
 }
 
 void ofApp::setupClientNetwork() {
+  clientNet = ofxUDPManager();
   clientNet.Create();
   clientNet.SetEnableBroadcast(true);
   clientNet.SetNonBlocking(true);
@@ -23,9 +24,15 @@ void ofApp::setupClientNetwork() {
 }
 
 void ofApp::broadCastClients(string msg) {
+  ofLog(OF_LOG_NOTICE,"sending to client net: "+msg);
   clientNet.Close();
+  clientNet = ofxUDPManager();
+  clientNet.Create();
+  clientNet.SetEnableBroadcast(true);
+  clientNet.SetNonBlocking(true);
+  clientNet.SetReuseAddress(true);
   clientNet.Connect("255.255.255.255", 3331);
-  clientNet.SendAll(msg.c_str(), msg.size());
+  clientNet.Send(msg.c_str(), msg.size());
   clientNet.Close();
   setupClientNetwork();
 }
