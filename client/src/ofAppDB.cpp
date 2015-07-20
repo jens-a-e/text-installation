@@ -47,7 +47,7 @@ void ofApp::buildCitationRun(){
   vector<int> ids;
   
   // substract header row from numRows!
-  for (int r=0; r < db.numRows-1; r++) {
+  for (int r=1; r <= db.numRows; r++) {
     ids.push_back(r);
   }
   
