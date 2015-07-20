@@ -66,6 +66,7 @@ void ofApp::buildCitationRun(){
     citationIDs.push_back(*i);
   }
   DumpCitationList();
+//  ofExit();
 }
 
 void ofApp::nextCitation(){
@@ -118,26 +119,11 @@ void ofApp::notifyCiting(int id) {
 }
 
 void ofApp::scheduleUserComment() {
-  scheduleDownload();
   
   ofLog() << "Scheduling latest user comment";
   
-  deque<int>::iterator newestComment = citationIDs.end();
-  
-  for(deque<int>::iterator id = citationIDs.begin(); id != citationIDs.end(); ++id) {
-    Citation* c = Citation::fromCSVRow(db, *id);
-    if(c->reason == "comment" && *newestComment < c->id) {
-      newestComment = id;
-    }
-    delete c;
+  while (citationIDs.front() != db.numRows-1 and !citationIDs.empty()) {
+    citationIDs.pop_front();
   }
-  
-  if (newestComment != citationIDs.end()) {
-    ofLog() << "Found latest user comment with id: " << *newestComment;
-    int comment = *newestComment;
-    citationIDs.erase(newestComment);
-    citationIDs.push_front(comment);
-  } else {
-    ofLog() << "Could not find latest user comment";
-  }
+
 }

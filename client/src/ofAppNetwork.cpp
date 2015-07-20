@@ -71,6 +71,8 @@ void ofApp::masterConnectionUpdate() {
       scheduleDownload();
     }
     else if (message == "showUserComment") {
+      doDownload = true;
+      scheduleDownload();
       scheduleUserComment();
     }
   }
