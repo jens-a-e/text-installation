@@ -28,6 +28,8 @@ public:
   static Citation * fromString(string s);
 
   const string toString();
+  
+  const bool isComment();
 };
 
 #endif /* defined(__CiteClient__Citation__) */
