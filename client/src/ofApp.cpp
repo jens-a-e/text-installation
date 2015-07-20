@@ -4,11 +4,12 @@ bool ofApp::bAlignByPixel = false;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+  
   Settings.load(ofToDataPath("settings.xml",true));
   
   bDebug = Settings.getValue("settings:debug", 0) > 0;
   if (bDebug) {
-    ofSetLogLevel(OF_LOG_VERBOSE);
+    ofSetLogLevel(OF_LOG_NOTICE);
   } else {
     ofSetLogLevel(OF_LOG_ERROR);
   }
@@ -28,11 +29,7 @@ void ofApp::setup(){
   bgHue = bgColor.getHue();
   bgBright = bgColor.getBrightness();
   
-  setupMasterConnection();
-  setupClientNetwork();
-  
-  scheduleDownload();
-  
+
   ofSetFrameRate(60);
   ofSetVerticalSync(true);
   ofBackground(bgColor);
@@ -45,22 +42,16 @@ void ofApp::setup(){
   
   // load settings
   
-  watcher.registerAllEvents(this);
-  fileFilter.addExtension("xml");
-  fileFilter.addExtension("csv");
-
-  std::string folderToWatch = ofToDataPath("", true);
-  bool listExistingItemsOnStart = true;
-  
-  watcher.addPath(folderToWatch, listExistingItemsOnStart, &fileFilter);
-  
   // Prepare fonts
   loadFonts();
   
-  // Prepare citations
+  setupMasterConnection();
+  setupClientNetwork();
   
-  loadDB();  
-  
+  doReload = doDownload = true;
+  scheduleDownload();
+  scheduleReload();
+
   // -- Setup Timers
   setupTimers();
   
@@ -73,6 +64,7 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+  doReload = doDownload = true;
   masterConnectionUpdate();
   clientNetworkUpdate();
   updateAllTimers();

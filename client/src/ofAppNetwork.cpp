@@ -42,25 +42,13 @@ void ofApp::clientNetworkUpdate() {
   if (buff_size > 0) {
     char* buffer = (char*) malloc(buff_size * sizeof(char));
     clientNet.Receive(buffer, buff_size);
-    string message = string(buffer);
+    string message = buffer;
     free(buffer);
     if(message == "") return;
-    ofLog() << "Client Network recieved: " << message;
+    ofLog(OF_LOG_NOTICE) << "Client Network recieved: " << message;
     if(message.find("citing:") != std::string::npos) {
       ofStringReplace(message, "citing:", "");
-      char _remote[64];
-      clientNet.GetRemoteAddr(_remote);
-      string remote(_remote);
-      int cited = ofToInt(message);
-      
-      clientCites[remote] = cited;
-      
-      popCitation(cited);
-      
-      std::cout << remote << " send: " << message << ", the map is now:\n";
-      for (std::map<string,int>::iterator it=clientCites.begin(); it!=clientCites.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
-      
+      popCitation(ofToInt(message));
       DumpCitationList();
     }
   }
@@ -68,7 +56,6 @@ void ofApp::clientNetworkUpdate() {
 
 void ofApp::setupMasterConnection() {
   masterConnection.Create();
-//  masterConnection.SetEnableBroadcast(true);
   masterConnection.SetNonBlocking(true);
   masterConnection.Bind(3332);
 }
@@ -90,6 +77,10 @@ void ofApp::masterConnectionUpdate() {
 }
 
 void ofApp::scheduleDownload() {
+  if (!doDownload) {
+    ofLog() << "DB already downloaded this frame.";
+    return;
+  }
   ofHttpResponse resp = ofSaveURLTo("http://master.text:4200/zitate.csv", ofToDataPath("downloaded-db.csv"));
   
   if (resp.status != 200) {
@@ -99,5 +90,6 @@ void ofApp::scheduleDownload() {
     ofFile::copyFromTo("zitate.csv", "zitate.csv.bak", true, false);
     ofFile::copyFromTo("downloaded-db.csv", "zitate.csv", true, true);
     scheduleReload();
+    doDownload = false;
   }
 }

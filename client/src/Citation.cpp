@@ -35,13 +35,12 @@ void cleanBody(string *body) {
   }
 }
 
-Citation* Citation::fromCSVRow(ofxCsv csv, int row) {
+Citation* Citation::fromCSVRow(ofxCsv csv, int _id) {
   // [Row = ID]: Zitat,Name,Position,Jahr,Anlass
   
-  row += 1; // the first row is a table header
+  int row = _id+1; // the first row is a table header
   string body, author, affiliation, reason, year;
   
-  int id        = row;
   body          = csv.getString(row, 0);
   author        = csv.getString(row, 1);
   affiliation   = csv.getString(row, 2);
@@ -50,7 +49,7 @@ Citation* Citation::fromCSVRow(ofxCsv csv, int row) {
 
   cleanBody(&body);
   return new Citation(
-                  id,
+                  _id,
                   body,
                   author,
                   affiliation,

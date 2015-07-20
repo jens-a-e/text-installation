@@ -36,17 +36,7 @@ public:
   static bool bAlignByPixel;
   
   ofxXmlSettings Settings;
-  
-  DirectoryWatcherManager watcher;
-  FileExtensionFilter fileFilter;
-  
-  void onDirectoryWatcherItemAdded(const DirectoryWatcherManager::DirectoryEvent& evt);
-  void onDirectoryWatcherItemRemoved(const DirectoryWatcherManager::DirectoryEvent& evt);
-  void onDirectoryWatcherItemModified(const DirectoryWatcherManager::DirectoryEvent& evt);
-  void onDirectoryWatcherItemMovedFrom(const DirectoryWatcherManager::DirectoryEvent& evt);
-  void onDirectoryWatcherItemMovedTo(const DirectoryWatcherManager::DirectoryEvent& evt);
-  void onDirectoryWatcherError(const Poco::Exception& exc);
-  
+
   ofxUDPManager clientNet;
   ofxUDPManager masterConnection;
   
@@ -55,9 +45,7 @@ public:
   void setupClientNetwork();
   void clientNetworkUpdate();
   void broadCastClients(string msg);
-  
-  
-  
+
   void setupMasterConnection();
   void masterConnectionUpdate();
   
@@ -103,6 +91,8 @@ public:
   ofxCsv db;
   string dbPath;
   void loadDB();
+  bool doReload, doDownload;
+
   
   ofColor bgColor;
   float bgSat,bgHue,bgBright;

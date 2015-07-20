@@ -8,9 +8,9 @@
 
 #include "ofApp.h"
 
-static bool doReload = false;
 //--------------------------------------------------------------
 void ofApp::loadDB(){
+  if (!doReload) return;
   doReload = false;
   db.loadFile(dbPath);
   citationIDs.clear();
@@ -22,12 +22,19 @@ void ofApp::scheduleReload() {
 }
 
 void ofApp::DumpCitationList(){
-  ofLog(OF_LOG_VERBOSE) << "---------------";
-  ofLog(OF_LOG_VERBOSE) << "Current citation ids:";
-  for (unsigned int i = 0; i< citationIDs.size(); i++) {
-    ofLog(OF_LOG_VERBOSE) << citationIDs[i];
+  ofLog(OF_LOG_NOTICE) << "---------------";
+  ofLog(OF_LOG_NOTICE) << "Current citation ids:";
+  stringstream ids;
+  int count = 0;
+  for(deque<int>::iterator i = citationIDs.begin(); i != citationIDs.end(); ++i) {
+    ids << *i << "\t";
+    if(++count%10 == 0) {
+      ids << endl;
+    }
   }
-  ofLog(OF_LOG_VERBOSE) << "---------------";
+  ofLog(OF_LOG_NOTICE) << endl << ids.str();
+
+  ofLog(OF_LOG_NOTICE) << "---------------";
 }
 
 void ofApp::buildCitationRun(){
@@ -93,7 +100,9 @@ void ofApp::nextCitation(){
 bool ofApp::popCitation(int id){
   if (citationIDs.empty()) return true;
   bool found = false;
+  unsigned int limit = 0;
   for(deque<int>::iterator i = citationIDs.begin(); i != citationIDs.end(); ++i) {
+    if(++limit == 10) break;
     if (id == *i) {
       citationIDs.erase(i);
       found = true;
@@ -105,13 +114,16 @@ bool ofApp::popCitation(int id){
 
 void ofApp::notifyCiting(int id) {
   // update the
-  // updateActiveCites(id);
-  broadCastClients("citing:"+ofToString(id-1)); // -1!! because id start at 1
+  broadCastClients("citing:"+ofToString(id));
 }
 
 void ofApp::scheduleUserComment() {
-  // find the comment with the highest id
+  scheduleDownload();
+  
+  ofLog() << "Scheduling latest user comment";
+  
   deque<int>::iterator newestComment = citationIDs.end();
+  
   for(deque<int>::iterator id = citationIDs.begin(); id != citationIDs.end(); ++id) {
     Citation* c = Citation::fromCSVRow(db, *id);
     if(c->reason == "comment" && *newestComment < c->id) {
@@ -119,9 +131,13 @@ void ofApp::scheduleUserComment() {
     }
     delete c;
   }
+  
   if (newestComment != citationIDs.end()) {
+    ofLog() << "Found latest user comment with id: " << *newestComment;
     int comment = *newestComment;
     citationIDs.erase(newestComment);
     citationIDs.push_front(comment);
+  } else {
+    ofLog() << "Could not find latest user comment";
   }
 }
