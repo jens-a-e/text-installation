@@ -58,6 +58,7 @@ const bool useServer = false;
 
 void ofApp::nextCitation(){
   if (useServer) {
+    
     // try server
     ofHttpResponse nextCite = ofLoadURL("http://master.text:4200/cgi-bin/test.lua");
     if(  nextCite.status != 200 || nextCite.data.size() == 0) {
@@ -102,7 +103,7 @@ fallback:
   }
   
   ofLog() << currentCitation->toString();
-  broadCastClients("Citing:"+ofToString(currentCitation->id));
+  broadCastClients("citing:"+ofToString(currentCitation->id));
   
 }
 

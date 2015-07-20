@@ -109,6 +109,8 @@ public:
   
   int lastCitationID;
   std::stack<int,std::vector<int> > * citationIDs;
+
+  map<string, int> clientCites;
   
   void setupDB();
   

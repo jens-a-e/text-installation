@@ -23,10 +23,11 @@ void ofApp::setupClientNetwork() {
 }
 
 void ofApp::broadCastClients(string msg) {
-  // TODO: Use IP address from a settings file, or try to get from system call
+  clientNet.Close();
   clientNet.Connect("255.255.255.255", 3331);
   clientNet.SendAll(msg.c_str(), msg.size());
   clientNet.Close();
+  setupClientNetwork();
 }
 
 void ofApp::clientNetworkUpdate() {
@@ -34,9 +35,23 @@ void ofApp::clientNetworkUpdate() {
   if (buff_size > 0) {
     char* buffer = (char*) malloc(buff_size * sizeof(char));
     clientNet.Receive(buffer, buff_size);
-    string msg = string(buffer);
+    string message = string(buffer);
     free(buffer);
-    ofLog() << "Client Network recieved: " << msg;
+    if(message == "") return;
+    ofLog() << "Client Network recieved: " << message;
+    if(message.find("citing:") != std::string::npos) {
+      ofStringReplace(message, "citing:", "");
+      char _remote[64];
+      clientNet.GetRemoteAddr(_remote);
+      string remote(_remote);
+      int cited = ofToInt(message);
+      
+      clientCites[remote] = cited;
+      
+      std::cout << remote << " send: " << message << ", the map is now:\n";
+      for (std::map<string,int>::iterator it=clientCites.begin(); it!=clientCites.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
+    }
   }
 }
 
