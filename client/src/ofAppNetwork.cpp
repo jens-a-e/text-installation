@@ -74,8 +74,8 @@ void ofApp::setupMasterConnection() {
 }
 
 void ofApp::masterConnectionUpdate() {
-  char udpMessage[1000];
-  masterConnection.Receive(udpMessage,1000);
+  char udpMessage[1024];
+  masterConnection.Receive(udpMessage,1024);
   string message=udpMessage;
   if (message != "") {
     ofLog() << "Master Network send: " << message;

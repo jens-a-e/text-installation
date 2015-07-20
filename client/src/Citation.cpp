@@ -101,7 +101,6 @@ const string Citation::toString() {
   +"\nAuthor: "+author
   +"\nAffilitation: "+affiliation
   +"\nYear: "+year
-  +"\nReason: "+reason
-  +"\n";
+  +"\nReason: "+reason;
 }
 
