@@ -79,7 +79,7 @@ void ofApp::nextCitation(){
     doDownloadComments = !newComments;
   }
   
-  if (!newCites || !newComments) {
+  if (newCites || newComments) {
     // reload on any successful download
     doReload = true;
   }
