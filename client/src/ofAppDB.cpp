@@ -122,8 +122,22 @@ void ofApp::scheduleUserComment() {
   
   ofLog() << "Scheduling latest user comment";
   
+  // alternatively, pop deque until front is non-comment,
+  // then push_front the last comment (the new one)
+  
+  // brute force empty until last comment is in front
   while (citationIDs.front() != db.numRows-1 and !citationIDs.empty()) {
     citationIDs.pop_front();
+  }
+  
+  // check wether next is also a comment
+  if (citationIDs.size() > 1) {
+    deque<int>::iterator next = citationIDs.begin()+1;
+    Citation * c = Citation::fromCSVRow(db, *next);
+    if (c->isComment()) {
+      citationIDs.erase(next);
+    }
+    delete c;
   }
 
 }
