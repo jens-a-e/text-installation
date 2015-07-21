@@ -132,9 +132,6 @@ if not udp then print(err) os.exit() end
 
 local clientID = math.floor(math.random() * 5.9)
 
---- overwrite for testing:
-clientID = 1
-
 -- send signal to show the last user comment
 for i,client in ipairs(clients) do
   if i == clientID then
