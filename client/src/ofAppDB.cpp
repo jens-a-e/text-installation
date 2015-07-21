@@ -112,7 +112,8 @@ void ofApp::nextCitation(){
   else if (numCites >= maxCites) {
     pickCite = !noComments;
   }
-  else if(mustBeComment) {
+  
+  if(mustBeComment) {
     pickCite = false;
   }
   
@@ -161,6 +162,9 @@ void ofApp::nextCitation(){
   
   ofLog() << "After pick:";
   DumpCitationList();
+
+  mustBeComment = false;
+
 }
 
 bool ofApp::popCitation(int id){
