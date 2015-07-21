@@ -88,8 +88,8 @@ public:
   void showTimersDebug();
 
   // Citation DB
-  ofxCsv db;
-  string dbPath;
+  ofxCsv db, comments;
+  string dbPath, commentsPath;
   void loadDB();
   bool doReload, doDownload;
 
@@ -101,16 +101,8 @@ public:
   
   int lastCitationID;
   deque<int> citationIDs;
-
-  map<string, int> clientCites;
-  set<int> activeCites;
-  set<int> citedCites;
-  set<int> citedComments;
-  
-  bool inActiveCites(int id);
   
   void notifyCiting(int id);
-  void updateActiveCites(int id);
   
   void setupDB();
   

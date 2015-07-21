@@ -21,21 +21,6 @@ void ofApp::scheduleReload() {
   loadDB();
 }
 
-void ofApp::DumpCitationList(){
-  ofLog(OF_LOG_NOTICE) << "---------------";
-  ofLog(OF_LOG_NOTICE) << "Current citation ids:";
-  stringstream ids;
-  int count = 0;
-  for(deque<int>::iterator i = citationIDs.begin(); i != citationIDs.end(); ++i) {
-    ids << *i << "\t";
-    if(++count%10 == 0) {
-      ids << endl;
-    }
-  }
-  ofLog(OF_LOG_NOTICE) << endl << ids.str();
-
-  ofLog(OF_LOG_NOTICE) << "---------------";
-}
 
 void ofApp::buildCitationRun(){
   // gather the ids
@@ -140,4 +125,21 @@ void ofApp::scheduleUserComment() {
     delete c;
   }
 
+}
+
+
+void ofApp::DumpCitationList(){
+  ofLog(OF_LOG_NOTICE) << "---------------";
+  ofLog(OF_LOG_NOTICE) << "Current citation ids:";
+  stringstream ids;
+  int count = 0;
+  for(deque<int>::iterator i = citationIDs.begin(); i != citationIDs.end(); ++i) {
+    ids << *i << "\t";
+    if(++count%10 == 0) {
+      ids << endl;
+    }
+  }
+  ofLog(OF_LOG_NOTICE) << endl << ids.str();
+  
+  ofLog(OF_LOG_NOTICE) << "---------------";
 }
