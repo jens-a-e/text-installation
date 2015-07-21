@@ -1,8 +1,11 @@
 -- textinstallation - comment receiver script
 -- jens alexander ewald, lea.io, 2015
 
-local db = "/root/textinstallation/db/comments.csv"
+local db = "/root/textinstallation/db/comments.db.csv"
+local store = "/root/textinstallation/db/comments.csv"
 local debugHost = "192.168.123.207"
+local maxComments = 20
+local debug = false
 
 -- pick one client to show the current comment next
 local clients = {
@@ -122,6 +125,26 @@ os.execute("logger -t \"kommentar.user.comment.csv\" '" .. entry .. "'\n")
 f:write(entry)
 f:close()
 
+local commentCount = 0
+for _ in io.lines(db) do
+  commentCount = commentCount+1
+end
+
+os.execute("logger -t \"kommentar.user.comment.csv\" 'Number of comments: " .. commentCount .. "'\n")
+
+local fout,status,err = io.open(store, "w")
+local line = 0
+local limit = commentCount-maxComments
+for _line in io.lines(db) do
+  line = line+1
+  if commentCount <= maxComments or line > limit then
+    -- copy  data set to new file
+    fout:write(_line,"\n")
+  end
+end
+fout:write("\n") -- empty line at the end
+fout:close()
+
 -- notify clients to get new DB
 require 'socket'
 port = 3332
@@ -131,6 +154,11 @@ if not udp then print(err) os.exit() end
 -- udp:setoption('broadcast', true)
 
 local clientID = math.floor(math.random() * 5.9)
+
+--- overwrite for testing:
+if debug then
+  clientID = 1
+end
 
 -- send signal to show the last user comment
 for i,client in ipairs(clients) do
