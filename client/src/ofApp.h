@@ -110,6 +110,9 @@ public:
   
   bool popCitation(int id);
   
+  bool downloadCites();
+  bool downloadComments();
+  
   void scheduleReload();
   void scheduleUserComment();
   void scheduleDownload();

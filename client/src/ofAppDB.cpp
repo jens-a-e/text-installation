@@ -13,14 +13,12 @@ void ofApp::loadDB(){
   if (!doReload) return;
   doReload = false;
   db.loadFile(dbPath);
-  citationIDs.clear();
-  buildCitationRun();
+  comments.loadFile(commentsPath);
 }
 
 void ofApp::scheduleReload() {
-  loadDB();
+  doReload = true;
 }
-
 
 void ofApp::buildCitationRun(){
   // gather the ids
@@ -56,10 +54,30 @@ void ofApp::buildCitationRun(){
 
 void ofApp::nextCitation(){
   
+  if(doDownload) {
+    bool newCites = downloadCites();
+    if (newCites) {
+      ofLog() << "Downloaded new citations.";
+    }
+    doDownload = true;
+    bool newComments = downloadComments();
+    if (newComments) {
+      ofLog() << "Downloaded new comments.";
+    }
+    doDownload = !newCites || !newComments; // check wether to retry next time!
+    doReload = newCites || newComments;
+  }
+  
+  if (doReload) {
+    loadDB();
+    citationIDs.clear();
+  }
+  
   if (citationIDs.empty()) {
     buildCitationRun();
   }
   
+  // re-check the queue
   if (citationIDs.empty()) {
     ofLog(OF_LOG_NOTICE) << "No ids to cite";
     return;

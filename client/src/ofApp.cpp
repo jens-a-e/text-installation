@@ -5,6 +5,7 @@ bool ofApp::bAlignByPixel = false;
 //--------------------------------------------------------------
 void ofApp::setup(){
   
+  // load settings
   Settings.load(ofToDataPath("settings.xml",true));
   
   bDebug = Settings.getValue("settings:debug", 0) > 0;
@@ -39,8 +40,8 @@ void ofApp::setup(){
   
   // db settings, non-settable
   dbPath = ofToDataPath("zitate.csv", true);
+  commentsPath = ofToDataPath("comments.csv", true);
   
-  // load settings
   
   // Prepare fonts
   loadFonts();
@@ -48,7 +49,6 @@ void ofApp::setup(){
   setupMasterConnection();
   setupClientNetwork();
   
-  doReload = doDownload = true;
   scheduleDownload();
   scheduleReload();
 
@@ -64,7 +64,6 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-  doReload = doDownload = true;
   masterConnectionUpdate();
   clientNetworkUpdate();
   updateAllTimers();
@@ -83,7 +82,7 @@ void ofApp::draw(){
     
     if (type.bIsRunning || waitForMeta.bIsRunning || showMeta.bIsRunning || waitRewind.bIsRunning || rewind.bIsRunning) {
 
-      if (currentCitation->reason == "comment") {
+      if (currentCitation->isComment()) {
         ofBackground(33, 102, 137);
       }
       
