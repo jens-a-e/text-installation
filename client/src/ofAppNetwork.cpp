@@ -20,7 +20,7 @@ void ofApp::setupClientNetwork() {
   clientNet.SetEnableBroadcast(true);
   clientNet.SetNonBlocking(true);
   clientNet.SetReuseAddress(true);
-  clientNet.Bind(3331);
+  clientNet.Bind(Settings.getValue("udp:client", 3331));
 }
 
 void ofApp::broadCastClients(string msg) {
@@ -31,7 +31,7 @@ void ofApp::broadCastClients(string msg) {
   clientNet.SetEnableBroadcast(true);
   clientNet.SetNonBlocking(true);
   clientNet.SetReuseAddress(true);
-  clientNet.Connect("255.255.255.255", 3331);
+  clientNet.Connect("255.255.255.255", Settings.getValue("udp:client", 3331));
   clientNet.Send(msg.c_str(), msg.size());
   clientNet.Close();
   setupClientNetwork();
@@ -57,7 +57,7 @@ void ofApp::clientNetworkUpdate() {
 void ofApp::setupMasterConnection() {
   masterConnection.Create();
   masterConnection.SetNonBlocking(true);
-  masterConnection.Bind(3332);
+  masterConnection.Bind(Settings.getValue("udp:master", 3332));
 }
 
 void ofApp::masterConnectionUpdate() {
@@ -83,7 +83,8 @@ void ofApp::scheduleDownload() {
     ofLog() << "DB already downloaded this frame.";
     return;
   }
-  ofHttpResponse resp = ofSaveURLTo("http://master.text:4200/zitate.csv", ofToDataPath("downloaded-db.csv"));
+  string URL = Settings.getValue("urls:zitate", "http://master.text:4200/zitate.csv");
+  ofHttpResponse resp = ofSaveURLTo(URL, ofToDataPath("downloaded-db.csv"));
   
   if (resp.status != 200) {
     ofLog() << "Error updating DB " << resp.error;

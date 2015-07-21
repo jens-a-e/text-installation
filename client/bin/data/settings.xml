@@ -21,4 +21,12 @@
     <b>59</b>
     <shift>0.2</shift>
   </background>
+  <urls>
+    <zitate>http://master.text:4200/zitate.csv</zitate>
+    <comments>http://master.text:4200/comments.csv</comments>
+  </urls>
+  <udp>
+    <master>3332</master>
+    <client>3331</client>
+  </udp>
 </settings>
