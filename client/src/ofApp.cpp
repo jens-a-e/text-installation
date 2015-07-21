@@ -4,7 +4,7 @@ bool ofApp::bAlignByPixel = false;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-  
+
   // load settings
   Settings.load(ofToDataPath("settings.xml",true));
   
@@ -41,7 +41,9 @@ void ofApp::setup(){
   // db settings, non-settable
   dbPath = ofToDataPath("zitate.csv", true);
   commentsPath = ofToDataPath("comments.csv", true);
-  
+
+  // cite statistics
+  numCites = numComments = 0;
   
   // Prepare fonts
   loadFonts();

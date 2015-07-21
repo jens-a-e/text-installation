@@ -51,6 +51,11 @@ void ofApp::clientNetworkUpdate() {
       popCitation(ofToInt(message));
       DumpCitationList();
     }
+    if(message.find("commenting:") != std::string::npos) {
+      ofStringReplace(message, "citing:", "");
+      popComment(ofToInt(message));
+      DumpCitationList();
+    }
   }
 }
 

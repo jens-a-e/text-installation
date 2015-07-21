@@ -100,8 +100,9 @@ public:
   
   deque<int> citationIDs;
   list<int> citations,comments;
+  int numCites,numComments;
   
-  void notifyCiting(int id);
+  void notifyCiting(Citation* c);
   
   void setupDB();
   
@@ -109,6 +110,7 @@ public:
   void nextCitation();
   
   bool popCitation(int id);
+  bool popComment(int id);
   
   bool downloadCites();
   bool downloadComments();
