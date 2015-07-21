@@ -87,17 +87,16 @@ public:
   void updateAllTimers();
   void showTimersDebug();
 
+  ofColor bgColor;
+  float bgSat,bgHue,bgBright;
+  double bgShift;
+  void newBackground();
+
   // Citation DB
   ofxCsv db, comments;
   string dbPath, commentsPath;
   void loadDB();
   bool doReload, doDownload;
-
-  
-  ofColor bgColor;
-  float bgSat,bgHue,bgBright;
-  double bgShift;
-  void newBackground();
   
   int lastCitationID;
   deque<int> citationIDs;
