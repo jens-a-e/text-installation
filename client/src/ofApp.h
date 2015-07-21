@@ -98,7 +98,6 @@ public:
   void loadDB();
   bool doReload, doDownloadCites, doDownloadComments;
   
-  deque<int> citationIDs;
   list<int> citations,comments;
   int numCites,numComments;
   
@@ -106,7 +105,6 @@ public:
   
   void setupDB();
   
-  void buildCitationRun();
   void nextCitation();
   
   bool popCitation(int id);

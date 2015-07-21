@@ -20,38 +20,6 @@ void ofApp::scheduleReload() {
   doReload = true;
 }
 
-void ofApp::buildCitationRun(){
-  // gather the ids
-  if (db.numRows == 0) {
-    ofLog(OF_LOG_WARNING, "No data in DB");
-    return;
-  }
-  
-  vector<int> ids;
-  
-  // substract header row from numRows!
-  for (int r=1; r <= db.numRows; r++) {
-    ids.push_back(r);
-  }
-  
-  if (currentCitation == NULL) {
-    ofRandomize(ids);
-  } else {
-    int testId;
-    do {
-      ofRandomize(ids);
-      testId = ids.at(0);
-    } while(testId != currentCitation->id);
-  }
-  
-  citationIDs.clear();
-  for(vector<int>::iterator i = ids.begin(); i != ids.end(); i++) {
-    citationIDs.push_back(*i);
-  }
-  DumpCitationList();
-//  ofExit();
-}
-
 void ofApp::nextCitation(){
   bool newCites = false; bool newComments = false;
   
@@ -86,15 +54,10 @@ void ofApp::nextCitation(){
   
   if (doReload) {
     loadDB();
-    citationIDs.clear();
     citations.clear();
     comments.clear();
   }
-  
-//  if (citationIDs.empty()) {
-//    buildCitationRun();
-//  }
-//
+
   ofLog() << "Cites in buffer " << citations.size() << " " << citations.empty();
   ofLog() << "Comments in buffer " << comments.size() << " " << comments.empty();
   
@@ -120,12 +83,6 @@ void ofApp::nextCitation(){
     scheduleDownload();
     scheduleReload();
   }
-  
-  // re-check the queue
-//  if (citationIDs.empty()) {
-//    ofLog(OF_LOG_NOTICE) << "No ids to cite";
-//    return;
-//  }
 
   if (citations.empty() && comments.empty()) {
     ofLog(OF_LOG_NOTICE) << "No citations loaded";
@@ -134,19 +91,11 @@ void ofApp::nextCitation(){
   
   ofLog() << "Before pick:";
   DumpCitationList();
+  
+  int maxCites = Settings.getValue("max-cites", 6);
+  int maxComments = Settings.getValue("max-comments", 1);
 
-//  int next = citationIDs.front();
-//  citationIDs.pop_front();
-//  
-//  if(currentCitation != NULL) {
-//    delete currentCitation;
-//  }
-//
-//  currentCitation = Citation::fromCSVRow(db, next);
-//  
-//  ofLog() << currentCitation->toString();
-
-  if (numComments+numCites >= 7) {
+  if (numComments+numCites >= maxCites+maxComments) {
     numCites = numComments = 0;
   }
   
@@ -157,10 +106,10 @@ void ofApp::nextCitation(){
   
   bool pickCite = ofRandomf() > 1/4.f;
   
-  if (numComments >= 1) {
+  if (numComments >= maxComments) {
     pickCite = !noCites;
   }
-  else if (numCites >= 6) {
+  else if (numCites >= maxCites) {
     pickCite = !noComments;
   }
   else if(mustBeComment) {
@@ -170,18 +119,15 @@ void ofApp::nextCitation(){
   int nextId = -1;
 
   if (pickCite && !noCites) {
-    numCites = MIN(6,numCites+1);
-//    if (!citations.empty()) {
-      int pos = ofRandom(citations.size()-1);
-      list<int>::iterator item = citations.begin();
-      advance(item, pos);
-      nextId = *item;
-      citations.erase(item);
-//    }
+    numCites = MIN(maxCites,numCites+1);
+    int pos = ofRandom(citations.size()-1);
+    list<int>::iterator item = citations.begin();
+    advance(item, pos);
+    nextId = *item;
+    citations.erase(item);
   }
   else if(!pickCite && !noComments) {
-    numComments = MIN(1,numComments+1);
-//    if(!comments.empty()) {
+    numComments = MIN(maxComments,numComments+1);
     list<int>::iterator item;
     if (mustBeComment) {
       nextId = comments.back();
@@ -193,7 +139,6 @@ void ofApp::nextCitation(){
       nextId = *item;
       comments.erase(item);
     }
-//    }
   }
 
   ofLog() << "Current stats: " << numComments << " to " << numCites;
