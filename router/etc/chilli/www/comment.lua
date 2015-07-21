@@ -1,7 +1,7 @@
 -- textinstallation - comment receiver script
 -- jens alexander ewald, lea.io, 2015
 
-local db = "/root/textinstallation/db/zitate.csv"
+local db = "/root/textinstallation/db/comments.csv"
 
 -- Import the JSON en-/decoder
 JSON = (loadfile "JSON.lua")()
@@ -135,8 +135,6 @@ local clientID = math.floor(math.random() * 5.9)
 udp:sendto("showUserComment", clients[clientID], port)
 -- also send to jens' machine for debugging
 udp:sendto("showUserComment", "192.168.123.207", port)
-
-
 
 
 
