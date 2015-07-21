@@ -13,7 +13,7 @@ void ofApp::loadDB(){
   if (!doReload) return;
   doReload = false;
   db.loadFile(dbPath);
-  comments.loadFile(commentsPath);
+  commentsDb.loadFile(commentsPath);
 }
 
 void ofApp::scheduleReload() {
@@ -53,19 +53,35 @@ void ofApp::buildCitationRun(){
 }
 
 void ofApp::nextCitation(){
+  bool newCites = false; bool newComments = false;
   
-  if(doDownload) {
-    bool newCites = downloadCites();
+  if(doDownloadCites) {
+    newCites = downloadCites();
     if (newCites) {
       ofLog() << "Downloaded new citations.";
+    } else {
+      ofLog() << "Could not download new citations.";
     }
-    doDownload = true;
+    // check wether to retry next time!
+    doDownloadCites = !newCites;
+  }
+  
+  if(doDownloadComments) {
     bool newComments = downloadComments();
     if (newComments) {
       ofLog() << "Downloaded new comments.";
+    } else {
+      ofLog() << "Could not download new comments.";
     }
-    doDownload = !newCites || !newComments; // check wether to retry next time!
-    doReload = newCites || newComments;
+    // unflag new comment signal, comment-download failed
+    mustBeComment = newComments & mustBeComment;
+    // check wether to retry next time!
+    doDownloadComments = !newComments;
+  }
+  
+  if (!newCites || !newComments) {
+    // reload on any successful download
+    doReload = true;
   }
   
   if (doReload) {
@@ -122,26 +138,26 @@ void ofApp::notifyCiting(int id) {
 }
 
 void ofApp::scheduleUserComment() {
-  
-  ofLog() << "Scheduling latest user comment";
-  
-  // alternatively, pop deque until front is non-comment,
-  // then push_front the last comment (the new one)
-  
-  // brute force empty until last comment is in front
-  while (citationIDs.front() != db.numRows-1 and !citationIDs.empty()) {
-    citationIDs.pop_front();
-  }
-  
-  // check wether next is also a comment
-  if (citationIDs.size() > 1) {
-    deque<int>::iterator next = citationIDs.begin()+1;
-    Citation * c = Citation::fromCSVRow(db, *next);
-    if (c->isComment()) {
-      citationIDs.erase(next);
-    }
-    delete c;
-  }
+  mustBeComment = true;
+//  ofLog() << "Scheduling latest user comment";
+//  
+//  // alternatively, pop deque until front is non-comment,
+//  // then push_front the last comment (the new one)
+//  
+//  // brute force empty until last comment is in front
+//  while (citationIDs.front() != db.numRows-1 and !citationIDs.empty()) {
+//    citationIDs.pop_front();
+//  }
+//  
+//  // check wether next is also a comment
+//  if (citationIDs.size() > 1) {
+//    deque<int>::iterator next = citationIDs.begin()+1;
+//    Citation * c = Citation::fromCSVRow(db, *next);
+//    if (c->isComment()) {
+//      citationIDs.erase(next);
+//    }
+//    delete c;
+//  }
 
 }
 

@@ -70,18 +70,18 @@ void ofApp::masterConnectionUpdate() {
       scheduleDownload();
     }
     else if (message == "showUserComment") {
-      scheduleDownload();
+      doDownloadComments = true;
       scheduleUserComment();
     }
   }
 }
 
 void ofApp::scheduleDownload() {
-  doDownload = true;
+  doDownloadCites = doDownloadComments = true;
 }
 
 bool ofApp::downloadCites() {
-  if(!doDownload) return true;
+  if(!doDownloadCites) return true;
   
   string URL = Settings.getValue("urls:zitate", "http://master.text:4200/zitate.csv");
 
@@ -96,14 +96,14 @@ bool ofApp::downloadCites() {
     ofFile::copyFromTo("downloaded-zitate.csv", "zitate.csv", true, true);
     ofFile::removeFile("downloaded-zitate.csv");
     scheduleReload();
-    doDownload = false;
+    doDownloadCites = false;
     return true;
   }
 }
 
 
 bool ofApp::downloadComments() {
-  if(!doDownload) return true;
+  if(!doDownloadComments) return true;
   
   string URL = Settings.getValue("urls:comments", "http://master.text:4200/comments.csv");
   
@@ -118,7 +118,7 @@ bool ofApp::downloadComments() {
     ofFile::copyFromTo("downloaded-comments.csv", "comments.csv", true, true);
     ofFile::removeFile("downloaded-comments.csv");
     scheduleReload();
-    doDownload = false;
+    doDownloadComments = false;
     return true;
   }
 }

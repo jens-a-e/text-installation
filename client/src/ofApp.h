@@ -93,13 +93,13 @@ public:
   void newBackground();
 
   // Citation DB
-  ofxCsv db, comments;
+  ofxCsv db, commentsDb;
   string dbPath, commentsPath;
   void loadDB();
-  bool doReload, doDownload;
+  bool doReload, doDownloadCites, doDownloadComments;
   
-  int lastCitationID;
   deque<int> citationIDs;
+  list<int> citations,comments;
   
   void notifyCiting(int id);
   
