@@ -4,11 +4,13 @@ bool ofApp::bAlignByPixel = false;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+
+  // load settings
   Settings.load(ofToDataPath("settings.xml",true));
   
   bDebug = Settings.getValue("settings:debug", 0) > 0;
   if (bDebug) {
-    ofSetLogLevel(OF_LOG_VERBOSE);
+    ofSetLogLevel(OF_LOG_NOTICE);
   } else {
     ofSetLogLevel(OF_LOG_ERROR);
   }
@@ -28,11 +30,7 @@ void ofApp::setup(){
   bgHue = bgColor.getHue();
   bgBright = bgColor.getBrightness();
   
-  setupMasterConnection();
-  setupClientNetwork();
-  
-  scheduleDownload();
-  
+
   ofSetFrameRate(60);
   ofSetVerticalSync(true);
   ofBackground(bgColor);
@@ -42,25 +40,20 @@ void ofApp::setup(){
   
   // db settings, non-settable
   dbPath = ofToDataPath("zitate.csv", true);
-  
-  // load settings
-  
-  watcher.registerAllEvents(this);
-  fileFilter.addExtension("xml");
-  fileFilter.addExtension("csv");
+  commentsPath = ofToDataPath("comments.csv", true);
 
-  std::string folderToWatch = ofToDataPath("", true);
-  bool listExistingItemsOnStart = true;
-  
-  watcher.addPath(folderToWatch, listExistingItemsOnStart, &fileFilter);
+  // cite statistics
+  numCites = numComments = 0;
   
   // Prepare fonts
   loadFonts();
   
-  // Prepare citations
+  setupMasterConnection();
+  setupClientNetwork();
   
-  loadDB();  
-  
+  scheduleDownload();
+  scheduleReload();
+
   // -- Setup Timers
   setupTimers();
   
@@ -91,7 +84,7 @@ void ofApp::draw(){
     
     if (type.bIsRunning || waitForMeta.bIsRunning || showMeta.bIsRunning || waitRewind.bIsRunning || rewind.bIsRunning) {
 
-      if (currentCitation->reason == "comment") {
+      if (currentCitation->isComment()) {
         ofBackground(33, 102, 137);
       }
       

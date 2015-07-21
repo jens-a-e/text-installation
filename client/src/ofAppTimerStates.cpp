@@ -93,11 +93,12 @@ void ofApp::typeTimerStartHandler(int &args) {
     ofLog() << "No citation found, trying again later...";
     type.stop();
     idle.start(false); // try again later...
+    return;
   }
   
   citeAmount++;
   
-  cite_partial = currentCitation->body.substr(0,citeAmount);
+//  cite_partial = currentCitation->body.substr(0,citeAmount);
 }
 
 void ofApp::typeTimerCompleteHandler(int &args) {
@@ -140,7 +141,7 @@ void ofApp::waitRewindTimerCompleteHandler(int &args) {
 void ofApp::rewindTimerStartHandler(int &args) {
   //  ofLog(OF_LOG_NOTICE,"Rewind Timer Started!");
   citeAmount--;
-  cite_partial = currentCitation->body.substr(0,citeAmount);
+//  cite_partial = currentCitation->body.substr(0,citeAmount);
 }
 
 void ofApp::rewindTimerCompleteHandler(int &args) {

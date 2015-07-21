@@ -36,17 +36,7 @@ public:
   static bool bAlignByPixel;
   
   ofxXmlSettings Settings;
-  
-  DirectoryWatcherManager watcher;
-  FileExtensionFilter fileFilter;
-  
-  void onDirectoryWatcherItemAdded(const DirectoryWatcherManager::DirectoryEvent& evt);
-  void onDirectoryWatcherItemRemoved(const DirectoryWatcherManager::DirectoryEvent& evt);
-  void onDirectoryWatcherItemModified(const DirectoryWatcherManager::DirectoryEvent& evt);
-  void onDirectoryWatcherItemMovedFrom(const DirectoryWatcherManager::DirectoryEvent& evt);
-  void onDirectoryWatcherItemMovedTo(const DirectoryWatcherManager::DirectoryEvent& evt);
-  void onDirectoryWatcherError(const Poco::Exception& exc);
-  
+
   ofxUDPManager clientNet;
   ofxUDPManager masterConnection;
   
@@ -55,7 +45,7 @@ public:
   void setupClientNetwork();
   void clientNetworkUpdate();
   void broadCastClients(string msg);
-  
+
   void setupMasterConnection();
   void masterConnectionUpdate();
   
@@ -97,27 +87,37 @@ public:
   void updateAllTimers();
   void showTimersDebug();
 
-  // Citation DB
-  ofxCsv db;
-  string dbPath;
-  void loadDB();
-  
   ofColor bgColor;
   float bgSat,bgHue,bgBright;
   double bgShift;
   void newBackground();
+
+  // Citation DB
+  ofxCsv db, commentsDb;
+  string dbPath, commentsPath;
+  void loadDB();
+  bool doReload, doDownloadCites, doDownloadComments;
   
-  int lastCitationID;
-  std::stack<int,std::vector<int> > * citationIDs;
+  list<int> citations,comments;
+  int numCites,numComments;
+  
+  void notifyCiting(Citation* c);
   
   void setupDB();
   
-  int currentCitationID();
-  void buildCitationRun();
   void nextCitation();
+  
+  bool popCitation(int id);
+  bool popComment(int id);
+  
+  bool downloadCites();
+  bool downloadComments();
+  
   void scheduleReload();
   void scheduleUserComment();
   void scheduleDownload();
   bool mustBeComment;
+  
+  void DumpCitationList();
   
 };

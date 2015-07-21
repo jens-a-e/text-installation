@@ -1,7 +1,18 @@
 -- textinstallation - comment receiver script
 -- jens alexander ewald, lea.io, 2015
 
-local db = "/root/textinstallation/db/zitate.csv"
+local db = "/root/textinstallation/db/comments.csv"
+local debugHost = "192.168.123.207"
+
+-- pick one client to show the current comment next
+local clients = {
+  "192.168.123.225",
+  "192.168.123.162",
+  "192.168.123.155",
+  "192.168.123.146",
+  "192.168.123.210",
+  "192.168.123.193",
+}
 
 -- Import the JSON en-/decoder
 JSON = (loadfile "JSON.lua")()
@@ -113,31 +124,28 @@ f:close()
 
 -- notify clients to get new DB
 require 'socket'
-host = "192.168.123.255"
 port = 3332
 udp, err = socket.udp()
 if not udp then print(err) os.exit() end
-udp:setoption('broadcast', true)
-os.execute("logger -t \"kommentar.network\" 'Sending update beacon to clients'\n")
-udp:sendto("update", host, port)
 
--- pick one client to show the current comment next
-local clients = {
-  "192.168.123.225",
-  "192.168.123.162",
-  "192.168.123.155",
-  "192.168.123.146",
-  "192.168.123.210",
-  "192.168.123.193",
-}
+-- udp:setoption('broadcast', true)
 
 local clientID = math.floor(math.random() * 5.9)
-udp:sendto("showUserComment", clients[clientID], port)
+
+-- send signal to show the last user comment
+for i,client in ipairs(clients) do
+  if i == clientID then
+    os.execute("logger -t \"kommentar.network\" 'Sending show comment to "..client.."'\n")
+    udp:sendto("showUserComment", client, port)
+  else
+    os.execute("logger -t \"kommentar.network\" 'Sending update beacon to "..client.."'\n")
+    udp:sendto("update", client, port)
+  end
+end
+
 -- also send to jens' machine for debugging
-udp:sendto("showUserComment", "192.168.123.207", port)
-
-
-
+udp:sendto("update", debugHost, port)
+udp:sendto("showUserComment", debugHost, port)
 
 
 -- respond back with the current comment
@@ -146,7 +154,7 @@ local body = JSON:encode_pretty(data)
 os.execute("logger -t \"kommentar.user.comment\" '" .. body .. "'\n")
 
 
--- Respond with OK and current comment
+-- Respond with OK and curretn comment
 local header = [[HTTP/1.0 200 OK
 Content-Type: application/json
 Cache: none
