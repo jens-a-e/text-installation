@@ -153,7 +153,9 @@ if not udp then print(err) os.exit() end
 
 -- udp:setoption('broadcast', true)
 
-local clientID = math.floor(math.random() * 5.9)
+-- pick a random client
+math.randomseed(os.time())
+local clientID = math.floor(math.random() * 5.9)+1
 
 --- overwrite for testing:
 if debug then
