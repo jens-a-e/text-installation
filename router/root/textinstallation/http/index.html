@@ -20,7 +20,7 @@
     <script type="text/javascript" charset="utf-8">
 
     $(function(){
-      setTimeout($('.name').focus, 1000);
+      setTimeout(function(){$('.name').focus();}, 1000);
 
       $('.name').on('keyup', function(event){
         var chars = $(this).val().length;
@@ -83,15 +83,18 @@
       });
 
       $('button.logoff').on('click', function(){
-        $.getJSON('/do/logoff', function(data){
-          log("got logoff response!")
-          log(JSON.stringify(data,null, '  '));
+        window.location.href = "/do/deauth";
+        // $.get('/do/deauth', function(data){
+        //   log("got logoff response!")
+        //   log(JSON.stringify(data,null, '  '));
+        // }).fail(function(error){
+        //   log("got error!")
+        //   log(JSON.stringify(this,null, '  '));
+        //   log(JSON.stringify(error,null, '  '));
+        // }).always(function(){
+
           window.close();
-        }).fail(function(error){
-          log("got error!")
-          log(JSON.stringify(this,null, '  '));
-          log(JSON.stringify(error,null, '  '));
-        });
+        // });
       });
 
       var showSuccess = function() {
@@ -178,7 +181,7 @@
     }
 
     .logoff,.debug {
-      display: none;
+      /*display: none;*/
     }
 
     .error, .send, .success {

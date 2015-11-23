@@ -13,9 +13,8 @@ config dnsmasq
 	option local '/text/'
 	option domain 'text'
 	list interface 'lan'
-	# list notinterface 'spot'
+	list notinterface 'spot'
 	option nonwildcard '1'
-
 
 config dhcp 'lan'
 	option interface 'lan'
@@ -65,4 +64,8 @@ config host
 	option mac '7c:dd:90:4f:df:c9'
 	option ip '192.168.123.193'
 
+config host
+	option name 'jens'
+	option mac 'ac:bc:32:b7:90:d7'
+	option ip '192.168.123.195'
 

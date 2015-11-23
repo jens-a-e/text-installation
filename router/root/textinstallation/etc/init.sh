@@ -50,7 +50,7 @@ start_spot_httpd()
 
   procd_append_param command -h "${HTTP_ROOT}"
   procd_append_param command -r master
-  procd_append_param command -l /do
+  procd_append_param command -l ""
   procd_append_param command -L "${DIR}/main.lua"
   procd_append_param command -t 60
   procd_append_param command -T 30
@@ -58,7 +58,7 @@ start_spot_httpd()
   procd_append_param command -A 1
   procd_append_param command -n 10
   procd_append_param command -N 100
-  procd_append_param command -E "${HTTP_ERROR_URL}"
+  # procd_append_param command -E "${HTTP_ERROR_URL}"
   procd_append_param command -p "${HTTP_LISTEN}"
 
   procd_close_instance

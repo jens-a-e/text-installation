@@ -34,7 +34,3 @@ config interface 'spot'
 	option netmask '255.255.255.0'
 	option ipaddr '192.168.182.1'
 	option delegate '0'
-	option gateway '192.168.182.1'
-	option broadcast '192.168.182.255'
-	option dns '192.168.182.1'
-
