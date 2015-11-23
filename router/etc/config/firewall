@@ -104,3 +104,12 @@ config redirect
 	option dest_port '80'
 	option proto 'tcp'
 
+config zone
+	option name 'spot'
+	option input 'ACCEPT'
+	option forward 'REJECT'
+	option output 'ACCEPT'
+	option conntrack '1'
+	option log '1'
+	option network ' '
+
