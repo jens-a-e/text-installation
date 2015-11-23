@@ -87,3 +87,8 @@ start_service()
   start_spot_httpd
   start_dnsmasq
 }
+
+stop_service()
+{
+  for pid in `pgrep -f textinstallation`; do kill -9 $pid; done
+}
