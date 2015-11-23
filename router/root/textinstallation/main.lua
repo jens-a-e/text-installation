@@ -13,6 +13,7 @@ local store = "/root/textinstallation/db/comments.csv"
 local debugHost = "192.168.123.195"
 local maxComments = 20
 local debug = false
+local commentURL = "http://comment.com/submit"
 
 -- pick one client to show the current comment next
 local clients = {
@@ -184,8 +185,17 @@ function handle_request(env)
     return nil
   end
 
-  local send = uhttpd.send
-  os.execute("logger -t \"text.server\" 'Got Request to: ".. renv.PATH_INFO .. "'\n")
+  local send = uhttpd.sendc
+  local host = env.HTTP_HOST or env.SERVER_NAME or "no-server-found"
+  os.execute("logger -t \"text.server\" 'Got Request to: ".. host .. renv.PATH_INFO .. "'\n")
+  -- for k,v in pairs(env) do
+  --   if type(k) ~= 'number' then k = '"'..k..'"' end
+  --   os.execute("logger -t \"text.server.ENV\" '".. k .. ":" .. tostring(v) .. "'\n")
+  -- end
+  -- for k,v in pairs(env.headers) do
+  --   if type(k) ~= 'number' then k = '"'..k..'"' end
+  --   os.execute("logger -t \"text.server.HEADERS\" '".. k .. ":" .. tostring(v) .. "'\n")
+  -- end
   -- os.execute("logger -t \"text.server\" '".. dump(renv) .. "'\n")
 
   if renv.PATH_INFO == "/do/comment" then
@@ -196,17 +206,30 @@ function handle_request(env)
     return serve_file("/root/textinstallation/http/jquery.js","text/javascript")
   elseif renv.PATH_INFO == "/submit" then
     return serve_file("/root/textinstallation/http/index.html","text/html")
+  -- elseif renv.PATH_INFO == "/generate_204" then
+    -- os.execute("logger -t \"text.server.debug\" 'Sending 204 ...'\n")
+    -- send("Status: 204 No Content\r\n\r\n")
+    -- send("Status: 511 Network Authentication Required\r\n")
+    -- send("Status: 303 See Other\r\n")
+    -- send("Location: http://comments/submit\r\n\r\n")
+  else
+    -- 511 does not work on Android or Windows...
+    -- send("Status: 511 Network Authentication Required\r\n")
+    -- 307 is not according to resources found online, but sematically correct
+    -- send("Status: 307 Temporary Redirect\r\n")
+    -- Seems all clients support 302...
+    send("Status: 302 Found\r\n")
+    send("Location: "..commentURL.."\r\n\r\n")
   end
 
-  send("Status: 511 Network Authentication Required\r\n")
   send("Content-Type: text/html\r\n")
   send("Cache: none\r\n")
-  send("Connection: keep-alive\r\n")
+  send("Connection: Keep-Alive\r\n")
   send("\r\n")
-  send("<!doctype html><html><head><meta http-equiv=\"refresh\" content=\"0;url=http://comments/submit\"></head><style>body{background-color:rgb(33,102,137)}</style><body></body></html>")
+  send("<!doctype html><html><head><meta http-equiv=\"refresh\" content=\"0;url="..commentURL.."\"></head><style>body{background-color:rgb(33,102,137)}</style><body></body></html>")
 end
 
-
+-------------------- Comment Handler -------------------------------------------
 function handle_comment(env,send,recv)
   local isNotPost = (env["REQUEST_METHOD"] ~= "POST")
 
@@ -226,9 +249,12 @@ function handle_comment(env,send,recv)
   local status, result = pcall(store_comment,input)
 
   local data = {
-    comment = input,
-    env = env
+    comment = input
   }
+
+  if debug then
+    data["comment"] = env
+  end
 
   send("Status: 200 OK\r\n")
   uhttpd.send("Content-Type: application/json\r\n")
@@ -240,6 +266,7 @@ function handle_comment(env,send,recv)
 
 end
 
+-------------------- Store Comment ---------------------------------------------
 function store_comment(input)
 
   -- add the comment to the DB

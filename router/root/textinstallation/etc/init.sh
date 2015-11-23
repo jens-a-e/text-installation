@@ -4,6 +4,7 @@ START=99
 STOP=99
 USE_PROCD=1
 QUIET=""
+EXTRA_COMMANDS="kill"
 
 DIR="/root/textinstallation"
 
@@ -22,7 +23,7 @@ start_db_httpd()
 {
   echo "Starting DB http instance..."
   procd_open_instance
-  procd_set_param respawn
+  procd_set_param respawn ${respawn_threshold:-3600} ${respawn_timeout:-5} ${respawn_retry:-5}
 
   procd_set_param command "$UHTTPD_BIN" -f
 
@@ -44,7 +45,7 @@ start_spot_httpd()
 {
   echo "Starting captive http instance..."
   procd_open_instance
-  procd_set_param respawn
+  procd_set_param respawn ${respawn_threshold:-3600} ${respawn_timeout:-5} ${respawn_retry:-5}
 
   procd_set_param command "$UHTTPD_BIN" -f
 
@@ -71,24 +72,43 @@ start_dnsmasq()
 {
   echo "Starting catchall DNS & DHCP server"
   procd_open_instance
-  procd_set_param respawn
+  procd_set_param respawn ${respawn_threshold:-3600} ${respawn_timeout:-5} ${respawn_retry:-5}
   procd_set_param command "$DNSMASQ_BIN" -C "$DNSMASQ_CONF"
   procd_close_instance
 }
 
-service_triggers()
-{
-  procd_add_reload_trigger "network"
-}
+# service_triggers()
+# {
+#   procd_add_reload_trigger "network"
+# }
 
 start_service()
 {
+  pgrep -f /root/textinstallation
+  [ "$?" -eq 0 ] && stop_service
   start_db_httpd
   start_spot_httpd
   start_dnsmasq
 }
 
-stop_service()
+# reload_service()
+# {
+#   restart
+# }
+
+# restart()
+# {
+#   stop
+#   start_service
+# }
+# 
+
+kill()
 {
-  for pid in `pgrep -f textinstallation`; do kill -9 $pid; done
+  echo "Killing all related services"
+  for pid in `pgrep -f /root/textinstallation`; do
+    [ "$pid" -ne "$$" ] && kill -9 $pid
+  done
+  sleep 3
+  echo "Related services stopped"
 }
