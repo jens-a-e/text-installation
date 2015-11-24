@@ -239,10 +239,14 @@ function handle_comment(env,send,recv)
 
   local request_body = recv()
   local input = JSON:decode(request_body or "") or {}
-  input["name"]    = input["name"]    or "Ein Besucher"
-  input["comment"] = input["comment"] or nil
+  input["name"]    = input["name"]    or ""
+  input["comment"] = input["comment"] or ""
 
-  if input["comment"] == nil then
+  if input["name"] == "" then
+    input["name"] = "Ein Besucher"
+  end
+
+  if input["comment"] == "" then
     return bad_request(JSON.encode_pretty({error = "Comment must not be empty"}))
   end
 
