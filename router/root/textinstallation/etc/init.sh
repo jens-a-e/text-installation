@@ -4,7 +4,7 @@ START=99
 STOP=99
 USE_PROCD=1
 QUIET=""
-EXTRA_COMMANDS="kill"
+EXTRA_COMMANDS="killme"
 
 DIR="/root/textinstallation"
 
@@ -73,7 +73,7 @@ start_dnsmasq()
   echo "Starting catchall DNS & DHCP server"
   procd_open_instance
   procd_set_param respawn ${respawn_threshold:-3600} ${respawn_timeout:-5} ${respawn_retry:-5}
-  procd_set_param command "$DNSMASQ_BIN" -C "$DNSMASQ_CONF"
+  procd_set_param command "$DNSMASQ_BIN" -k -C "$DNSMASQ_CONF"
   procd_close_instance
 }
 
@@ -103,11 +103,16 @@ start_service()
 # }
 # 
 
-kill()
+stop_service()
+{
+  killme
+}
+
+killme()
 {
   echo "Killing all related services"
-  for pid in `pgrep -f /root/textinstallation`; do
-    [ "$pid" -ne "$$" ] && kill -9 $pid
+  pgrep -f /root/textinstallation | while read -s pid; do
+    [ "$pid" -ne "$$" ] && kill -TERM $pid
   done
   sleep 3
   echo "Related services stopped"
