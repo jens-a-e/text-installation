@@ -33,4 +33,4 @@ config interface 'spot'
 	option proto 'static'
 	option netmask '255.255.255.0'
 	option ipaddr '192.168.182.1'
-
+	option delegate '0'

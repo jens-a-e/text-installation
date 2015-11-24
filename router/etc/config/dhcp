@@ -12,6 +12,9 @@ config dnsmasq
 	option resolvfile '/tmp/resolv.conf.auto'
 	option local '/text/'
 	option domain 'text'
+	list interface 'lan'
+	list notinterface 'spot'
+	option nonwildcard '1'
 
 config dhcp 'lan'
 	option interface 'lan'
@@ -30,12 +33,6 @@ config odhcpd 'odhcpd'
 	option maindhcp '0'
 	option leasefile '/tmp/hosts/odhcpd'
 	option leasetrigger '/usr/sbin/odhcpd-update'
-
-config dhcp
-	option start '100'
-	option limit '150'
-	option interface 'hotspot'
-	option leasetime '5m'
 
 config host
 	option name 'client1'
@@ -66,4 +63,9 @@ config host
 	option name 'client6'
 	option mac '7c:dd:90:4f:df:c9'
 	option ip '192.168.123.193'
+
+config host
+	option name 'jens'
+	option mac 'ac:bc:32:b7:90:d7'
+	option ip '192.168.123.195'
 
