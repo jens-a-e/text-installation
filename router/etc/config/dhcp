@@ -1,0 +1,71 @@
+
+config dnsmasq
+	option domainneeded '1'
+	option boguspriv '1'
+	option localise_queries '1'
+	option rebind_protection '1'
+	option rebind_localhost '1'
+	option expandhosts '1'
+	option authoritative '1'
+	option readethers '1'
+	option leasefile '/tmp/dhcp.leases'
+	option resolvfile '/tmp/resolv.conf.auto'
+	option local '/text/'
+	option domain 'text'
+	list interface 'lan'
+	list notinterface 'spot'
+	option nonwildcard '1'
+
+config dhcp 'lan'
+	option interface 'lan'
+	option start '100'
+	option limit '150'
+	option leasetime '12h'
+	option dhcpv6 'server'
+	option ra 'server'
+	option ra_management '1'
+
+config dhcp 'wan'
+	option interface 'wan'
+	option ignore '1'
+
+config odhcpd 'odhcpd'
+	option maindhcp '0'
+	option leasefile '/tmp/hosts/odhcpd'
+	option leasetrigger '/usr/sbin/odhcpd-update'
+
+config host
+	option name 'client1'
+	option mac '7c:dd:90:5e:0c:49'
+	option ip '192.168.123.225'
+
+config host
+	option name 'client2'
+	option mac '7c:dd:90:5e:f8:3c'
+	option ip '192.168.123.162'
+
+config host
+	option name 'client3'
+	option mac '7c:dd:90:3f:55:e7'
+	option ip '192.168.123.155'
+
+config host
+	option name 'client4'
+	option mac '7c:dd:90:5e:f7:f4'
+	option ip '192.168.123.146'
+
+config host
+	option name 'client5'
+	option mac '7c:dd:90:4f:dc:da'
+	option ip '192.168.123.210'
+
+config host
+	option name 'client6'
+	option mac '7c:dd:90:4f:df:c9'
+	option ip '192.168.123.193'
+
+config host
+	option name 'jens'
+	option mac 'ac:bc:32:b7:90:d7'
+	option ip '192.168.123.195'
+

@@ -1,9 +1,5 @@
-
-bin/*.app
-
-*.xcodeproj/project.xcworkspace/xcuserdata/*
-*.xcodeproj/project.xcworkspace/xcuserdata/**/*
-*.xcodeproj/project.xcworkspace/xcshareddata/*
-
-
-*.xcodeproj/**/*.xcuserstate
+client/CiteClient.xcodeproj/xcuserdata
+downloaded-db.csv
+zitate.csv.bak
+!router/*.tar.gz
+*.bak

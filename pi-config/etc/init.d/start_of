@@ -1,0 +1,39 @@
+#!/bin/bash
+
+echo "Starting up fancy OpenFrameworks App..."
+JAIL=/home/pi/openFrameworks/apps/manuel-text/client/bin
+PIDFILE=/tmp/cite-client.pid
+
+dostart() {
+  start-stop-daemon --start -x ./cite-client -d $JAIL -m -p $PIDFILE &
+}
+
+dostop() {
+  #start-stop-daemon --stop --chroot $JAIL --pidfile $PIDFILE
+  pkill -9 cite-client
+}
+
+case "$1" in
+  start|"")
+    dostart
+	;;
+  reload|force-reload)
+	echo "Error: argument '$1' not supported" >&2
+	exit 3
+	;;
+  stop)
+	dostop
+	;;
+  restart)
+  dostop
+  dostart
+  ;;
+#  status)
+#	do_status
+#	exit $?
+#	;;
+ *)
+	echo "Usage: cite-client [start|stop|restart]" >&2
+	exit 3
+	;;
+esac
